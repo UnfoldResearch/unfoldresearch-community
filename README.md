@@ -26,6 +26,8 @@ This is a partial mirror of the full, private monorepo that's used for the devel
 
 This mirror repo gets updated automatically through Github Actions whenever there is a push to the original monorepo.
 
+The "community version" is a place where the community can leave additional feedback or requests, and discuss and contribute amongst each other.
+
 ## Why both the private and the community version?
 
 We like working with monorepos, as they keep everything in one place, thus making it simpler to work and iterate. But making everything public would be a massive security risk as there are many important things and a lot of sensitive code that could be leaked and exploited for malicious intents.

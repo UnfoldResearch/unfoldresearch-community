@@ -1,0 +1,30 @@
+{
+  "name": "unfold-doi",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    "node": "./build/index.js",
+    "require": "./build",
+    "import": "./src"
+  },
+  "files": [
+    "build"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.7.1",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.5.1",
+    "typescript": "4.8.3"
+  },
+  "scripts": {
+    "prepare": "tsc -b",
+    "build": "tsc -b",
+    "rebuild": "yarn build",
+    "build:single": "tsc src/index.ts --outFile unfold-doi.js --module amd --moduleResolution node"
+  }
+}

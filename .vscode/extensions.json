@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "emmanuelbeziat.vscode-great-icons",
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode"
+  ]
+}

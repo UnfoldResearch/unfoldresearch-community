@@ -1,0 +1,42 @@
+.btn-base {
+  @apply inline-flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-xs;
+  min-height: 24px;
+  transition-property: color, background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+
+  &:disabled,
+  &.btn-disabled {
+    @apply cursor-not-allowed opacity-80;
+  }
+}
+.btn-primary {
+  @extend .btn-base;
+
+  &:disabled {
+    @apply bg-bp-gray-8 hover:bg-bp-gray-7;
+  }
+
+  @apply bg-sky-600 text-white shadow-sm transition hover:bg-sky-700 active:bg-sky-800;
+}
+.btn-text {
+  @extend .btn-base;
+  @apply text-sky-600 hover:bg-white hover:text-gray-700;
+  max-height: 24px;
+}
+.btn-minimal {
+  @extend .btn-base;
+  @apply text-gray-600 hover:bg-bp-gray-3 active:bg-bp-gray-4;
+  &:disabled {
+    @apply hover:bg-transparent active:bg-transparent;
+  }
+}
+.btn-outline {
+  @extend .btn-base;
+  @apply relative box-border border border-sky-600 text-sky-600 hover:border-sky-700 hover:bg-bp-gray-2 active:border-sky-800 active:bg-bp-gray-3;
+  max-height: 22px;
+
+  &.gray {
+    @apply border-gray-400 text-gray-600 hover:text-gray-400 active:text-gray-500;
+  }
+}

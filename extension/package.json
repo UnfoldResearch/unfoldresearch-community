@@ -1,0 +1,12 @@
+{
+  "name": "extension",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "./build.sh",
+    "zip": "(rm unfoldresearch.zip || true) && zip -r unfoldresearch.zip build/"
+  },
+  "devDependencies": {
+    "typescript": "4.8.3"
+  }
+}

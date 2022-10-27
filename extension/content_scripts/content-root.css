@@ -1,0 +1,11 @@
+#unfoldresearch-extension {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 9999;
+  width: 100vw;
+  border: none;
+  background: none;
+  pointer-events: none;
+}

@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  // @apply bg-sky-50;
+  @apply bg-white;
+}
+
+.transition-bg-color {
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+p {
+  @apply mb-3;
+}
+
+.cloud {
+  @apply relative rounded;
+  // transition-colors
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+
+  &:after {
+    content: '';
+    @apply absolute bottom-0 left-3 right-3 block bg-gray-200;
+    height: 1px;
+  }
+  &:last-child,
+  &.no-line {
+    &:after {
+      display: none;
+    }
+  }
+
+  &:hover {
+    @apply bg-white shadow-md;
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.grouppp {
+  @apply flex flex-row items-center;
+  > * {
+    @apply rounded-none;
+  }
+  > *:first-child {
+    @apply rounded-l;
+  }
+  > *:last-child {
+    @apply rounded-r;
+  }
+  > *:not(:last-child) {
+    @apply border-r-0;
+  }
+}
+
+.voter {
+  .score {
+    position: relative;
+    span {
+      position: absolute;
+      top: 100%;
+      // transform: translate(-50%, -50%);
+      // left: 0;
+      right: 100%;
+    }
+  }
+}
+
+a,
+a:visited {
+  @apply text-sky-600 no-underline hover:underline focus:underline active:text-sky-800 active:underline;
+}
+
+a:visited {
+  color: #660099 !important;
+}

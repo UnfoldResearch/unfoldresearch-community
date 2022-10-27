@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "version": "1.7.11",
+  "name": "Unfold Research",
+  "description": "A tool for linking academic research together",
+  "author": "Dragan Okanovic <dragan@unfoldresearch.com>",
+  "homepage_url": "https://unfoldresearch.com",
+  "icons": {
+    "16": "logo_sm.png",
+    "32": "logo_sm.png",
+    "48": "logo_sm.png",
+    "128": "logo.png"
+  },
+
+  "permissions": ["storage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-root.js"],
+      "css": ["content-root.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

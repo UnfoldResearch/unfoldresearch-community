@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './Button/button.scss';
+@import './inputs/Dropdown/dropdown.scss';
+
+@import 'katex/dist/katex.min.css';
+@import './GFML/gfml.scss'

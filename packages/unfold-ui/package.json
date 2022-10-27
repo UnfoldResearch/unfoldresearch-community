@@ -1,0 +1,37 @@
+{
+  "name": "unfold-ui",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "devDependencies": {
+    "@types/katex": "^0.14.0",
+    "@types/node": "^18.7.1",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "autoprefixer": "^10.4.8",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.5.1",
+    "typescript": "4.8.3"
+  },
+  "scripts": {
+    "prepare": "tsc -b",
+    "build": "tsc -b",
+    "rebuild": "yarn build"
+  },
+  "dependencies": {
+    "@blueprintjs/popover2": "^1.6.3",
+    "@types/marked": "^4.0.7",
+    "cross-env": "^7.0.3",
+    "katex": "^0.16.3",
+    "marked": "^4.1.0"
+  },
+  "peerDependencies": {
+    "classnames": "^2.3.1",
+    "postcss": "^8.4.16",
+    "react": "18.2.0",
+    "sass": "^1.54.5",
+    "tailwindcss": "^3.1.8"
+  }
+}

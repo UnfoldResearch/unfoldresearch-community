@@ -25,7 +25,7 @@
     "@types/marked": "^4.0.7",
     "cross-env": "^7.0.3",
     "katex": "^0.16.3",
-    "marked": "^4.1.0"
+    "marked": "^4.2.0"
   },
   "peerDependencies": {
     "classnames": "^2.3.1",

@@ -7,6 +7,6 @@
     "zip": "(rm unfoldresearch.zip || true) && zip -r unfoldresearch.zip build/"
   },
   "devDependencies": {
-    "typescript": "4.9.4"
+    "typescript": "4.8.4"
   }
 }

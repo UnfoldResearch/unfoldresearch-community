@@ -50,13 +50,12 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
       if (res) {
         setCounts(res);
 
-        const url = new URL(currentPage.url);
-
-        analytics.events.track('ext.navigation.count', {
-          url: currentPage.url,
-          hostname: url.hostname,
-          withUser: user !== null,
-        });
+        // const url = new URL(currentPage.url);
+        // analytics.events.track('ext.navigation.count', {
+        //   url: currentPage.url,
+        //   hostname: url.hostname,
+        //   withUser: user !== null,
+        // });
       }
     };
 

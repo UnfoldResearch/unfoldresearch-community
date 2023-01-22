@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "./build.sh",
-    "zip": "(rm unfoldresearch.zip || true) && zip -r unfoldresearch.zip build/"
+    "zip": "(rm unfoldresearch.zip || true) && zip -r -j unfoldresearch.zip build/*"
   },
   "devDependencies": {
     "typescript": "4.9.4"

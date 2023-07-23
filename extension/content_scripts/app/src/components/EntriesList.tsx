@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
-import { Entry, Format } from 'unfold-core';
-import { Button, Icon, Input, FormatIcon } from 'unfold-ui';
+import { Entry } from 'unfold-core';
+import { Button, Icon, IconName, Input } from 'unfold-ui';
+
 import { EntryPreview } from './EntryPreview';
 import { DEFAULT_FILTER_OPTIONS, filterEntries } from '../utils/filtering';
 import { useNavigation } from '../utils/useNavigation';
 
-const CIRCLE_ICONS: readonly Format[] = ['dataset', 'software', 'paper', 'notes', 'review', 'question'] as const;
+const CIRCLE_ICONS: IconName[] = ['folder-open', 'box-2', 'file-text', 'note-text', 'receipt', 'new-release'];
 
 export const EntriesList = ({ entries }: { entries: Entry[] | null }): JSX.Element => {
   const { current, goToSubmit, goToBrowse } = useNavigation<'browse'>();
@@ -63,16 +64,16 @@ export const EntriesList = ({ entries }: { entries: Entry[] | null }): JSX.Eleme
                   height: '150px',
                 }}
               >
-                {CIRCLE_ICONS.map((fmt, idx) => (
+                {CIRCLE_ICONS.map((icon, idx) => (
                   <div
-                    key={fmt}
+                    key={icon}
                     className="absolute text-gray-400"
                     style={{
                       top: Math.sin((2 * Math.PI * idx) / CIRCLE_ICONS.length) * 60 + 60 + 'px',
                       left: Math.cos((2 * Math.PI * idx) / CIRCLE_ICONS.length) * 60 + 60 + 'px',
                     }}
                   >
-                    <FormatIcon color="currentColor" format={fmt} size={30} type="filled" />
+                    <Icon size={30} type="filled" icon={icon} />
                   </div>
                 ))}
                 <Icon

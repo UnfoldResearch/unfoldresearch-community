@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Default",
   "compilerOptions": {
     "composite": false,
     "declaration": true,
@@ -15,10 +14,11 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "jsx": "react-jsx",
     "lib": ["dom", "ES2015"],
-    "module": "ESNext",
-    "target": "es6"
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": "./src"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["src"]
 }

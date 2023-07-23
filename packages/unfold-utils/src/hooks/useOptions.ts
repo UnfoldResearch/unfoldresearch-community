@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { storage } from '../storage';
+import { extStorage } from '../storage';
 
 export type Options = {
   defaultSidebarWidth: number;
@@ -33,10 +33,10 @@ export const useOptions = () => {
   useEffect(() => {
     const getOptions = async () => {
       try {
-        const options = await storage.get(OPTIONS_STORAGE_KEY, null);
+        const options = await extStorage.get(OPTIONS_STORAGE_KEY, null);
         if (!options) {
           setOptions(DEFAULT_OPTIONS);
-          await storage.set(OPTIONS_STORAGE_KEY, DEFAULT_OPTIONS);
+          await extStorage.set(OPTIONS_STORAGE_KEY, DEFAULT_OPTIONS);
         } else {
           setOptions(options);
         }
@@ -51,7 +51,7 @@ export const useOptions = () => {
       ...options,
       ...option,
     };
-    await storage.set(OPTIONS_STORAGE_KEY, newOptions);
+    await extStorage.set(OPTIONS_STORAGE_KEY, newOptions);
     setOptions(newOptions);
   };
 

@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { Classes, Popover2 } from '@blueprintjs/popover2';
-import cx from 'classnames';
+import cn from 'classnames';
 import { Button } from '../../Button';
 import { Icon } from '../../Icon';
 
@@ -26,10 +26,10 @@ export const Dropdown = function <T>({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div data-wrap="dropdownWrap" className={cx('relative', className)}>
+    <div data-wrap="dropdownWrap" className={cn('relative', className)}>
       <Popover2
         content={
-          <div className={cx(Classes.POPOVER2_DISMISS, 'w-full overflow-y-auto', popoverClassName)}>
+          <div className={cn(Classes.POPOVER2_DISMISS, 'w-full overflow-y-auto', popoverClassName)}>
             {items.map((item, idx) => {
               return (
                 <div key={idx}>

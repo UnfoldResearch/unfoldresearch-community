@@ -1,5 +1,5 @@
 import React from 'react';
-import cx from 'classnames';
+import cn from 'classnames';
 
 type SpinnerProps = {
   width?: number;
@@ -32,7 +32,7 @@ export const Spinner = ({
 
   return (
     <div
-      className={cx('animate-spin', className)}
+      className={cn('animate-spin', className)}
       style={{
         animationDuration: `${duration}ms`,
         width: `${size}px`,

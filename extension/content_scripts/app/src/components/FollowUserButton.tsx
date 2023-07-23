@@ -3,7 +3,7 @@ import { User } from 'unfold-core';
 import analytics from '../utils/analytics';
 import api from '../utils/api';
 import { Button } from 'unfold-ui';
-import cx from 'classnames';
+import cn from 'classnames';
 
 type FollowUserButtonProps = {
   user: Pick<User, 'id'>;
@@ -67,7 +67,7 @@ export const FollowUserButton = ({ user }: FollowUserButtonProps): JSX.Element =
       icon="bell"
       iconProps={isFollowing ? { className: 'text-sky-600' } : undefined}
       onClick={handleToggle}
-      className={cx({
+      className={cn({
         'text-sky-600': isFollowing,
       })}
     >

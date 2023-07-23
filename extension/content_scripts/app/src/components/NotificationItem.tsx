@@ -1,7 +1,6 @@
 import { NotificationData, NotificationType } from 'unfold-core';
-import { EntryAuthor } from 'unfold-ui';
+import { EntryAuthor, EntryTitle } from 'unfold-ui';
 import { useNavigation } from '../utils/useNavigation';
-import { EntryTitle } from './EntryTitle';
 
 type NotificationComponent<nt extends NotificationData['type']> = (props: {
   notification: Omit<Extract<NotificationData, { type: nt }>, 'type'>;

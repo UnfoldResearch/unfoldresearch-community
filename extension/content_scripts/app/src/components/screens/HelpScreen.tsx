@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
+import { CONTACT } from 'unfold-core';
+import { Button } from 'unfold-ui';
+
 import analytics from '../../utils/analytics';
-import { CONTACT } from '../../utils/constants';
 import { useAuth } from '../../utils/useAuth';
 import { useNavigation } from '../../utils/useNavigation';
 import { ScreenTitle } from '../ScreenTitle';
-import { Button } from 'unfold-ui';
 
 export const HelpScreen = (): JSX.Element => {
   const { user } = useAuth();

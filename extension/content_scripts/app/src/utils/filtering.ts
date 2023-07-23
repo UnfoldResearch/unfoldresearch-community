@@ -1,10 +1,10 @@
-import { Entry, Format, FormatOptions } from 'unfold-core';
+import { Entry } from 'unfold-core';
 
 type FilterOrderBy = 'date' | 'score' | 'velocity';
 type FilterOrder = 'asc' | 'desc';
 
 export type FilterOptions = {
-  format: Record<Format, boolean>;
+  // format: Record<Format, boolean>;
   link: {
     refs: boolean;
     links: boolean;
@@ -19,7 +19,7 @@ export type FilterOptions = {
 };
 
 export const DEFAULT_FILTER_OPTIONS: FilterOptions = {
-  format: FormatOptions.reduce((acc, cat) => ({ ...acc, [cat]: true }), {} as Record<Format, boolean>),
+  // format: FormatOptions.reduce((acc, cat) => ({ ...acc, [cat]: true }), {} as Record<Format, boolean>),
   author: {
     community: true,
     authors: true,

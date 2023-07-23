@@ -1,5 +1,5 @@
 import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
-import cx from 'classnames';
+import cn from 'classnames';
 import { Icon, IconName, IconProps, IconType } from '../Icon';
 import React from 'react';
 
@@ -68,7 +68,7 @@ export const Button = ({
   };
   return (
     <button
-      className={cx(btnType, className)}
+      className={cn(btnType, className)}
       style={style}
       onClick={onClick}
       title={title}
@@ -101,7 +101,7 @@ export const AnchorButton = ({
   const btnType = minimal ? 'btn-minimal' : outline ? 'btn-outline' : textual ? 'btn-text' : 'btn-primary';
   return (
     <a
-      className={cx(btnType, className, { 'btn-disabled': disabled })}
+      className={cn(btnType, className, { 'btn-disabled': disabled })}
       style={style}
       href={href}
       target={newTab ? '_blank' : '_self'}

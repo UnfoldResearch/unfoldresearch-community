@@ -1,5 +1,5 @@
 import { CSSProperties, useEffect, useMemo, useRef } from 'react';
-import cx from 'classnames';
+import cn from 'classnames';
 import { formatGFMLatexText } from './helpers';
 import { clampStyle } from '../clampStyle';
 import React from 'react';
@@ -22,17 +22,23 @@ export const GFML = ({
   nonInteractive,
   clamp,
 }: GFMLProps): JSX.Element => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const formattedText = useMemo(() => formatGFMLatexText(text, inlineOnly), [text, inlineOnly]);
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const formattedText = useMemo(
+    () =>
+      formatGFMLatexText(text, {
+        inlineOnly,
+      }),
+    [text, inlineOnly],
+  );
 
   useEffect(() => {
     containerRef.current?.querySelectorAll('a').forEach((tag) => tag.setAttribute('target', '_blank'));
   }, [formattedText]);
 
   return (
-    <div
+    <span
       ref={containerRef}
-      className={cx(
+      className={cn(
         'gfml-container',
         {
           'non-interactive': !!nonInteractive,
@@ -46,6 +52,6 @@ export const GFML = ({
         ...(clamp ? clampStyle(clamp) : {}),
         ...style,
       }}
-    ></div>
+    ></span>
   );
 };

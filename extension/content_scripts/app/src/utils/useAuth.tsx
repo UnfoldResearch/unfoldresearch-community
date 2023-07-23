@@ -1,7 +1,7 @@
 import { useContext, createContext, useState, ReactNode, useEffect } from 'react';
 import api from './api';
 import jwt_decode from 'jwt-decode';
-import { storage } from 'unfold-utils';
+import { extStorage } from 'unfold-utils';
 import analytics from './analytics';
 
 type Auth = {
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const accessToken = await storage.get('auth::access_token', '');
+      const accessToken = await extStorage.get('auth::access_token', '');
 
       if (!accessToken) {
         setUser(null);
@@ -110,7 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       emailVerified: true,
     });
 
-    await storage.set('auth::access_token', loginRes.access_token);
+    await extStorage.set('auth::access_token', loginRes.access_token);
 
     const jwtPayload: JWTPayload = jwt_decode(loginRes.access_token);
 
@@ -126,7 +126,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout: Auth['logout'] = async () => {
     setUser(null);
-    await storage.remove('auth::access_token');
+    await extStorage.remove('auth::access_token');
     analytics.events.track('ext.user.logout');
     analytics.people.reset();
   };

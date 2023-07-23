@@ -4,7 +4,7 @@ import { User } from 'unfold-core';
 import analytics from '../utils/analytics';
 import api from '../utils/api';
 import { Button } from 'unfold-ui';
-import cx from 'classnames';
+import cn from 'classnames';
 
 type SaveUserButtonProps = {
   user: Pick<User, 'id' | 'displayName'>;
@@ -70,7 +70,7 @@ export const SaveUserButton = ({ user }: SaveUserButtonProps): JSX.Element => {
       icon={isInCollections === null ? 'loading' : 'star'}
       iconProps={isInCollections ? { className: 'text-sky-600' } : undefined}
       onClick={handleToggle}
-      className={cx({
+      className={cn({
         'text-sky-600': isInCollections,
       })}
     >

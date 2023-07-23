@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { CONTACT } from 'unfold-core';
 import { Button, AnchorButton, Input, BirdLogo } from 'unfold-ui';
 import { trimUnsafeDisplayName } from 'unfold-utils';
+
 import api from '../../utils/api';
-import { CONTACT } from '../../utils/constants';
 import { useAuth } from '../../utils/useAuth';
 import { useNavigation } from '../../utils/useNavigation';
-import { usePartialState } from '../../utils/usePartialState';
 
 const TokenScreen = ({ onSubmit }: { onSubmit: (token: string) => Promise<void> }): JSX.Element => {
   const [token, setToken] = useState('');
@@ -37,12 +37,12 @@ export const AuthScreen = (): JSX.Element => {
 
   const [step, setStep] = useState<'main' | 'token-pledge'>('main');
 
-  const [loginInfo, setLoginInfo] = usePartialState({
+  const [loginInfo, setLoginInfo] = useState({
     emailOrDisplayName: '',
     password: '',
   });
 
-  const [regInfo, setRegInfo] = usePartialState({
+  const [regInfo, setRegInfo] = useState({
     email: '',
     displayName: '',
     password: '',
@@ -148,7 +148,7 @@ export const AuthScreen = (): JSX.Element => {
             className="w-full"
             type="email"
             value={regInfo.email}
-            onChange={(e) => setRegInfo({ email: e.target.value })}
+            onChange={(e) => setRegInfo({ ...regInfo, email: e.target.value })}
             placeholder="Email"
             spellCheck={false}
             maxLength={128}
@@ -162,7 +162,7 @@ export const AuthScreen = (): JSX.Element => {
           <Input
             className="w-full"
             value={regInfo.displayName}
-            onChange={(e) => setRegInfo({ displayName: trimUnsafeDisplayName(e.target.value) })}
+            onChange={(e) => setRegInfo({ ...regInfo, displayName: trimUnsafeDisplayName(e.target.value) })}
             placeholder="Username"
             spellCheck={false}
             maxLength={16}
@@ -177,7 +177,7 @@ export const AuthScreen = (): JSX.Element => {
             className="w-full"
             type="password"
             value={regInfo.password}
-            onChange={(e) => setRegInfo({ password: e.target.value })}
+            onChange={(e) => setRegInfo({ ...regInfo, password: e.target.value })}
             placeholder="Password"
             spellCheck={false}
             maxLength={64}
@@ -198,7 +198,7 @@ export const AuthScreen = (): JSX.Element => {
           <Input
             className="w-full"
             value={loginInfo.emailOrDisplayName}
-            onChange={(e) => setLoginInfo({ emailOrDisplayName: e.target.value })}
+            onChange={(e) => setLoginInfo({ ...loginInfo, emailOrDisplayName: e.target.value })}
             placeholder="Email or username"
             spellCheck={false}
             onKeyDown={(e) => {
@@ -212,7 +212,7 @@ export const AuthScreen = (): JSX.Element => {
             className="w-full"
             type="password"
             value={loginInfo.password}
-            onChange={(e) => setLoginInfo({ password: e.target.value })}
+            onChange={(e) => setLoginInfo({ ...loginInfo, password: e.target.value })}
             placeholder="Password"
             spellCheck={false}
             onKeyDown={(e) => {

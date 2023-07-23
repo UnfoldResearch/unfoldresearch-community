@@ -2,12 +2,36 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { File as UFile } from 'unfold-core';
 import { formatFileSize, Keys } from 'unfold-utils';
 import { Icon, Button, Input, getFileIcon, clampStyle } from 'unfold-ui';
-import cx from 'classnames';
-import { flatToHierarchicalFiles, HierarchicalFile } from '../utils/files';
+import cn from 'classnames';
 import { useClickOutside } from '../utils/useClickOutside';
 import api from '../utils/api';
 import { DoneUploadFile, InProgressUploadFile, useFilesUploader } from '../utils/useFilesUploader';
 import analytics from '../utils/analytics';
+
+type HierarchicalFile = UFile & { children: HierarchicalFile[]; parent: HierarchicalFile | null };
+
+const flatToHierarchicalFiles = (files: UFile[]): HierarchicalFile[] => {
+  const hFiles: HierarchicalFile[] = files.map((f) => ({
+    ...f,
+    parent: null,
+    children: [],
+  }));
+
+  // top-level files don't have parents
+  const topLevelFiles: HierarchicalFile[] = [];
+
+  for (const file of hFiles) {
+    const parent = hFiles.find((f) => f.id === file.parentId);
+    if (!file.parentId || !parent) {
+      topLevelFiles.push(file);
+    } else {
+      file.parent = parent;
+      parent.children.push(file);
+    }
+  }
+
+  return topLevelFiles;
+};
 
 type Props = {
   files: UFile[];
@@ -180,7 +204,7 @@ export const FilesInput = ({ files: _files, onChange }: Props): JSX.Element => {
       )}
 
       <div
-        className={cx('relative max-h-[250px] overflow-y-auto bg-white', {
+        className={cn('relative max-h-[250px] overflow-y-auto bg-white', {
           'min-h-[120px]': interactive,
         })}
       >
@@ -294,7 +318,7 @@ const FileItem = ({
     <div>
       {!root && (
         <div
-          className={cx(
+          className={cn(
             'grid cursor-pointer grid-cols-1m items-center justify-between gap-1 py-0.5 pr-2 hover:bg-gray-200',
             {
               'bg-gray-100': selectedId === file.id,

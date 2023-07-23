@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react';
-import { Icon } from 'unfold-ui';
+import { Icon } from './Icon';
 
 type SectionToggleProps = {
   header: ReactNode | ((expanded: boolean) => ReactNode);

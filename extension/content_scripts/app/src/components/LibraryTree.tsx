@@ -1,10 +1,37 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Collection } from 'unfold-core';
 import { Icon, IconName, GFML } from 'unfold-ui';
-import cx from 'classnames';
-import { flatToHierarchicalLibrary, HierarchicalCollection } from '../utils/library';
+import cn from 'classnames';
 import { useClickOutside } from '../utils/useClickOutside';
-import { FormatIcon } from 'unfold-ui/src/FormatIcon';
+import { FormatIcon, Format as NarrowFormat } from 'unfold-plugins';
+
+export type HierarchicalCollection = Collection & {
+  children: HierarchicalCollection[];
+};
+
+export const flatToHierarchicalLibrary = (collections: Collection[]): HierarchicalCollection[] => {
+  const hCollections: HierarchicalCollection[] = collections.map((collection) => ({
+    ...collection,
+    children: [],
+  }));
+
+  // top-level collections don't have parents
+  const topLevelCollections: HierarchicalCollection[] = [];
+
+  for (const collection of hCollections) {
+    const parentId = collection.parentId;
+    if (!parentId) {
+      topLevelCollections.push({ ...collection });
+    } else {
+      const parentCollection = hCollections.find((c) => c.id === parentId);
+      if (parentCollection) {
+        parentCollection!.children.push(collection);
+      }
+    }
+  }
+
+  return topLevelCollections;
+};
 
 type LibraryTreeProps = {
   collections: Collection[] | null;
@@ -105,7 +132,7 @@ const CollectionItem = ({
       case null:
         return expandedCollections[collection.id] ? 'folder-open' : 'folder';
       case 'entry':
-        return <FormatIcon format={collection.format} />;
+        return <FormatIcon format={collection.format as NarrowFormat} />;
       case 'user':
         return 'user';
       default:
@@ -117,7 +144,7 @@ const CollectionItem = ({
     <div>
       {!root && (
         <div
-          className={cx('grid cursor-pointer grid-cols-m1 items-center gap-1 py-0.5 pr-2 hover:bg-gray-200', {
+          className={cn('grid cursor-pointer grid-cols-m1 items-center gap-1 py-0.5 pr-2 hover:bg-gray-200', {
             'bg-gray-100': selectedId === collection.id,
           })}
           style={{

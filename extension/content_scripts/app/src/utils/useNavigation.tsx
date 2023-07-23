@@ -13,6 +13,7 @@ type NavigationPage =
   | {
       screen: 'browse';
       entry: EntryFull;
+      setVote: (voteDetails: Pick<EntryFull, 'vote' | 'score'>) => void;
     }
   | {
       screen: 'report';
@@ -20,7 +21,7 @@ type NavigationPage =
     }
   | {
       screen: 'submit';
-      parent: Pick<Entry, 'id' | 'title'>;
+      parent: Entry;
     }
   | {
       screen: 'library';
@@ -67,7 +68,7 @@ export type Navigation = {
   goToAuth: () => void;
   goToBrowse: (targetEntry?: Pick<Entry, 'id' | 'title'>) => Promise<void>;
   goToReport: (entry: Entry) => void;
-  goToSubmit: (parent: Pick<Entry, 'id' | 'title'>) => void;
+  goToSubmit: (parent: Entry) => void;
   goToHelp: () => void;
   goToLibrary: (ownerId: User['id'], item?: Extract<NavigationPage, { screen: 'library' }>['pendingItem']) => void;
   goToUser: (userId: User['id']) => void;
@@ -119,7 +120,18 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
     });
 
     if (res && res.entry) {
-      setNav({ screen: 'browse', entry: res.entry });
+      const setVote: Extract<NavigationPage, { screen: 'browse' }>['setVote'] = ({ score, vote }) => {
+        setNav({
+          screen: 'browse',
+          entry: {
+            ...res.entry,
+            score,
+            vote,
+          },
+          setVote,
+        });
+      };
+      setNav({ screen: 'browse', entry: res.entry, setVote });
       analytics.events.track('ext.navigation.entry', {
         entryId: res.entry.id,
         title: res.entry.title,
@@ -148,7 +160,18 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
           });
 
           if (res && res.entry) {
-            setNav({ screen: 'browse', entry: res.entry });
+            const setVote: Extract<NavigationPage, { screen: 'browse' }>['setVote'] = ({ score, vote }) => {
+              setNav({
+                screen: 'browse',
+                entry: {
+                  ...res.entry,
+                  score,
+                  vote,
+                },
+                setVote,
+              });
+            };
+            setNav({ screen: 'browse', entry: res.entry, setVote });
             analytics.events.track('ext.navigation.entry', {
               entryId: res.entry.id,
               title: res.entry.title,

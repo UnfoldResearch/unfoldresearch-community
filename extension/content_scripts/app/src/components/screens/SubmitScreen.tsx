@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
-import { ContentMap, Format, License, File, FormatMeta, LicenseOptionsMeta } from 'unfold-core';
+import { License, File, LicenseOptionsMeta } from 'unfold-core';
+import { FormatMeta, FormatPickerInput, FormatContentComponent, Format } from 'unfold-plugins';
+import { Button, IconName, LicenseInput, Input, GFML, SectionToggle } from 'unfold-ui';
+
 import { useNavigation } from '../../utils/useNavigation';
-import { Button, IconName, LicenseInput, FormatPickerInput, Input, GFML, SectionToggle } from 'unfold-ui';
 import { FilesInput } from '../FilesInput';
 import api from '../../utils/api';
 import analytics from '../../utils/analytics';
-import { ContentDescriptors } from '../content';
 import { EntryContent } from '../EntryContent';
 import { useAuth } from '../../utils/useAuth';
-import { EntryFormat } from '../EntryFormat';
+
+type NextStepMeta = {
+  icon?: IconName;
+  text: string;
+} | null;
 
 export const SubmitScreen = (): JSX.Element => {
   const { current, goToBrowse } = useNavigation<'submit'>();
@@ -18,14 +23,10 @@ export const SubmitScreen = (): JSX.Element => {
   const [isPreview, setIsPreview] = useState(false);
 
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState<ContentMap[keyof ContentMap]>({
-    type: 'gfml',
-    data: {
-      text: '',
-    },
-  });
   const [files, setFiles] = useState<File[]>([]);
-  const [format, setFormat] = useState<Format | null>(null);
+  const [format, setFormat] = useState<string | null>(null);
+  const [content, setContent] = useState<unknown>(undefined);
+  const [contentNextStep, setContentNextStep] = useState<NextStepMeta>(null);
   // const [tags, setTags] = useState<Tag[]>([]);
   const [license, setLicense] = useState<{ key: License; description: string }>({
     key: 'cc-by-sa-4.0',
@@ -39,55 +40,26 @@ export const SubmitScreen = (): JSX.Element => {
     });
   }, []);
 
-  useEffect(() => {
-    if (!format) {
-      setContent({
-        type: 'gfml',
-        data: {
-          text: '',
-          ...content.data,
-        },
-      });
-      return;
-    }
-
-    const contentType = FormatMeta[format].contentType;
-
-    // this is fine because all content fields share the type,
-    // and they are all exclusivelly mapped in the database, so
-    // we can coalesce all of the content at once without issues
-    setContent({
-      // @ts-ignore
-      type: contentType,
-      // @ts-ignore
-      data: {
-        ...ContentDescriptors[contentType].default,
-        ...content.data,
-      },
-    });
-  }, [format]);
-
   const {
     disabled: submitBtnDisabled,
     text: submitBtnText,
     icon: submitBtnIcon,
   } = (() => {
-    // @ts-ignore
-    const contentNextStep = ContentDescriptors[content.type].nextStepFn(content.data);
-
     const isDisabled =
       !title ||
       !!contentNextStep ||
       !format ||
       status === 'submitting' ||
       (license.key === 'custom' && !license.description);
+
+    // text
     let btnText = 'Submit';
     if (!title) {
       btnText = 'Title not set';
     } else if (!format) {
       btnText = `Type not set`;
     } else if (contentNextStep) {
-      btnText = contentNextStep;
+      btnText = contentNextStep.text;
     } else if (license.key === 'custom' && !license.description) {
       btnText = 'License description is empty';
     }
@@ -100,6 +72,7 @@ export const SubmitScreen = (): JSX.Element => {
       btnText = '[Error] Try again';
     }
 
+    // icon
     let icon: IconName | undefined = isDisabled ? 'alert-triangle' : undefined;
     if (status === 'submitting') {
       icon = 'loading';
@@ -122,7 +95,6 @@ export const SubmitScreen = (): JSX.Element => {
         parentId: typeof current.parent === 'string' ? null : current.parent.id,
         format,
         title,
-        content,
         license: license.key,
         licenseDescription: license.description,
         files: files.map((f) => f.id),
@@ -147,8 +119,6 @@ export const SubmitScreen = (): JSX.Element => {
       setStatus('error');
     }
   };
-
-  const ContentComponent = ContentDescriptors[content.type].component;
 
   const previewAction = (
     <Button
@@ -195,6 +165,7 @@ export const SubmitScreen = (): JSX.Element => {
               createdBy: user!,
               score: 0,
               vote: null,
+              content,
               parent:
                 typeof current.parent === 'string'
                   ? {
@@ -210,7 +181,6 @@ export const SubmitScreen = (): JSX.Element => {
               title: title || '(untitled)',
               license: license.key,
               licenseDescription: license.description ?? '',
-              content,
               files,
             }}
           />
@@ -231,11 +201,7 @@ export const SubmitScreen = (): JSX.Element => {
               <div>{current.parent}</div>
             ) : (
               <div className="flex flex-col gap-0.5">
-                <EntryFormat
-                  // @ts-ignore
-                  format={current.parent.format}
-                />
-
+                <FormatMeta format={current.parent.format as Format} />
                 <GFML text={current.parent.title} nonInteractive className="faded" />
               </div>
             )}
@@ -253,14 +219,14 @@ export const SubmitScreen = (): JSX.Element => {
               {exp ? null : !format ? (
                 <span className="text-gray-500">(not selected)</span>
               ) : (
-                <EntryFormat format={format} />
+                <FormatMeta format={format as Format} />
               )}
             </div>
           )}
         >
           <div className="mt-3">
             <FormatPickerInput
-              value={format}
+              value={format as Format}
               onChange={(newFormat) => {
                 setFormat(newFormat);
                 analytics.events.track('ext.submit.type_change', {
@@ -279,15 +245,16 @@ export const SubmitScreen = (): JSX.Element => {
           <Input className="w-full" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
         </SectionToggle>
 
-        <ContentComponent
-          // @ts-ignore
-          data={content.data}
-          setData={(data) => {
-            // @ts-ignore
-            setContent({ type: content.type, data });
-          }}
-          isPreview={isPreview}
-        />
+        {format && (
+          <FormatContentComponent
+            isPreview={isPreview}
+            query=""
+            format={format as Format}
+            data={content}
+            setData={setContent}
+            setNextStep={setContentNextStep}
+          />
+        )}
 
         <SectionToggle
           className="my-3"

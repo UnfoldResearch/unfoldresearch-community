@@ -35,7 +35,7 @@ const remove = async (name: StorageLocation): Promise<void> => {
   }
 };
 
-export const storage = {
+export const extStorage = {
   get,
   set,
   remove,

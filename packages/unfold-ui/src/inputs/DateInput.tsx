@@ -2,17 +2,15 @@ import React from 'react';
 import { ChangeEvent } from 'react';
 import { Input } from './Input';
 
+type Date = {
+  day: number | null;
+  month: number | null;
+  year: number | null;
+};
+
 type Props = {
-  value:
-    | {
-        day: number | null;
-        month: number | null;
-        year: number | null;
-      }
-    | string
-    | null
-    | undefined;
-  onChange: (date: Props['value']) => void;
+  value: Date | string | null | undefined;
+  onChange: (date: Date) => void;
   disabled?: boolean;
 };
 

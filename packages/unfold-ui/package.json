@@ -9,12 +9,12 @@
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "autoprefixer": "10.4.13",
-    "eslint": "^8.11.0",
+    "eslint": "^8.32.0",
     "eslint-plugin-react": "^7.29.3",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "0.1.13",
-    "typescript": "4.9.4"
+    "typescript": "*"
   },
   "scripts": {
     "prepare": "tsc -b",
@@ -26,12 +26,14 @@
     "@types/marked": "^4.0.7",
     "cross-env": "^7.0.3",
     "katex": "^0.16.3",
-    "marked": "^4.2.0"
+    "marked": "^4.2.0",
+    "unfold-core": "*",
+    "unfold-utils": "*"
   },
   "peerDependencies": {
-    "classnames": "^2.3.1",
+    "classnames": "2.3.2",
     "postcss": "8.4.19",
-    "react": "18.2.0",
+    "react": "*",
     "sass": "1.56.1",
     "tailwindcss": "3.2.4"
   }

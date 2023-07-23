@@ -4,7 +4,7 @@ import { Toolbar } from './components/Toolbar';
 import { Sidebar } from './components/Sidebar';
 import { ResizableWrapper } from './components/ResizableWrapper';
 import { isDev, useOptions } from 'unfold-utils';
-import cx from 'classnames';
+import cn from 'classnames';
 import { usePageData } from './utils/usePageData';
 
 const App = (): JSX.Element => {
@@ -69,7 +69,7 @@ const App = (): JSX.Element => {
 
   return (
     <div
-      className={cx('fixed top-0 bottom-0 grid h-full grid-flow-col', {
+      className={cn('fixed top-0 bottom-0 grid h-full grid-flow-col', {
         'right-0': options.position === 'right',
         'left-0': options.position === 'left',
       })}

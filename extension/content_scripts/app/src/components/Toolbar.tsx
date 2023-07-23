@@ -1,13 +1,14 @@
-import { forwardRef, useEffect, useMemo, useState } from 'react';
-import { Format, FormatIconName, FormatMeta } from 'unfold-core';
+import { forwardRef, useEffect, useState } from 'react';
+import cn from 'classnames';
+import { Format } from 'unfold-core';
 import { formatAmount, useOptions } from 'unfold-utils';
-import { Button, Spinner, FormatIcon, BirdLogo } from 'unfold-ui';
-import cx from 'classnames';
+import { Button, Spinner, BirdLogo } from 'unfold-ui';
+import { FormatIcon, Format as NarrowFormat } from 'unfold-plugins';
+
 import { usePageData } from '../utils/usePageData';
 import api from '../utils/api';
 import { useNavigation } from '../utils/useNavigation';
 import { useAuth } from '../utils/useAuth';
-import analytics from '../utils/analytics';
 
 type ToolbarProps = {
   toggleExpanded: () => void;
@@ -21,20 +22,6 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
   const { user } = useAuth();
   const [counts, setCounts] = useState<Partial<Record<Format, number>> | null>(null);
   const [hasNotifs, setHasNotifs] = useState(false);
-
-  const countsByIcon: Partial<Record<FormatIconName, number>> = useMemo(() => {
-    if (!counts) {
-      return {};
-    }
-
-    const _countsByIcon: Partial<Record<FormatIconName, number>> = {};
-    const formats = Object.keys(counts) as Format[];
-    for (const format of formats) {
-      const icon = FormatMeta[format].icon;
-      _countsByIcon[icon] = (_countsByIcon[icon] ?? 0) + (counts[format] ?? 0);
-    }
-    return _countsByIcon;
-  }, [counts]);
 
   useEffect(() => {
     if (!currentPage) {
@@ -112,7 +99,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
         //     ? 'polygon(-10px 0, 100% 0, 100% calc(100% + 10px), -10px calc(100% + 10px))'
         //     : 'polygon(0 0, calc(100% + 10px) 0, calc(100% + 10px) calc(100% + 10px), 0 calc(100% + 10px))',
       }}
-      className={cx(
+      className={cn(
         'absolute inline-block cursor-pointer select-none border-y border-gray-200 bg-white py-3 px-2 text-xs text-gray-700 shadow-md',
         {
           'right-full rounded-l border-l': options.position === 'right',
@@ -124,7 +111,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
     >
       <div className="flex flex-col items-center">
         <div
-          className={cx({
+          className={cn({
             'mb-3': !expanded && (hasAnyContent || !counts),
           })}
           style={{
@@ -140,11 +127,11 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
         {counts ? (
           !expanded ? (
             <div className="flex flex-col gap-1">
-              {(Object.entries(countsByIcon) as [FormatIconName, number][])
+              {(Object.entries(counts) as [Format, number][])
                 .filter(([, cnt]) => cnt)
-                .map(([icon, cnt]) => (
-                  <div className="flex items-center gap-1" key={icon}>
-                    <FormatIcon icon={icon} /> {formatAmount(cnt)}
+                .map(([format, cnt]) => (
+                  <div className="flex items-center gap-1" key={format}>
+                    <FormatIcon format={format as NarrowFormat} /> {formatAmount(cnt)}
                   </div>
                 ))}
             </div>
@@ -157,7 +144,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
           <div className="mt-6 flex flex-col gap-2">
             <Button
               minimal
-              className={cx('flex place-content-center', {
+              className={cn('flex place-content-center', {
                 'border border-gray-200 bg-bp-gray-1': selectedItem === 'browse',
               })}
               icon="chart-column"
@@ -175,7 +162,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
             />
             <Button
               minimal
-              className={cx('flex place-content-center', {
+              className={cn('flex place-content-center', {
                 'border border-gray-200 bg-bp-gray-1': selectedItem === 'library',
               })}
               icon="star"
@@ -187,7 +174,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
             />
             <Button
               minimal
-              className={cx('relative flex place-content-center border', {
+              className={cn('relative flex place-content-center border', {
                 'border-gray-200 bg-bp-gray-1': selectedItem === 'notifications',
                 'border-transparent': selectedItem !== 'notifications',
               })}
@@ -204,7 +191,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
             </Button>
             <Button
               minimal
-              className={cx('flex place-content-center', {
+              className={cn('flex place-content-center', {
                 'border border-gray-200 bg-bp-gray-1': selectedItem === 'help',
               })}
               icon="lifebuoy"

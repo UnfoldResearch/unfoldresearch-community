@@ -56,9 +56,32 @@ export const formatLatex = (text: string, inlineOnly = false): string => {
   }
 };
 
-export const formatGFMLatexText = (text: string, inlineOnly = false): string => {
+export const formatGFMLatexText = (
+  text: string,
+  options?: {
+    inlineOnly?: boolean;
+  },
+): string => {
+  // if (options?.altLinks) {
+  //   marked.use({
+  //     renderer: {
+  //       link(href, title, text) {
+  //         return `<Link href={${href}} title={${title}}>${text}</Link>`;
+  //       },
+  //     },
+  //   });
+  // } else {
+  //   marked.use({
+  //     renderer: {
+  //       link(href, title, text) {
+  //         return `<a href={${href}} title={${title}}>${text}</a>`;
+  //       },
+  //     },
+  //   });
+  // }
+
   try {
-    const textLatexFormatted = formatLatex(text, inlineOnly);
+    const textLatexFormatted = formatLatex(text, !!options?.inlineOnly);
     return marked.parse(textLatexFormatted, {
       gfm: true,
       smartLists: false,

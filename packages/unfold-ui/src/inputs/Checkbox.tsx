@@ -4,7 +4,7 @@ import { InputHTMLAttributes } from 'react';
 type Props = Pick<InputHTMLAttributes<HTMLInputElement>, 'className' | 'style'> & {
   value: boolean;
   onChange: (value: boolean) => void;
-  label: string;
+  label?: React.ReactNode;
 };
 
 export const Checkbox = ({ value, onChange, label, className, style = {}, ...rest }: Props): JSX.Element => (

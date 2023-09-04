@@ -6,4 +6,8 @@
 @import './inputs/Dropdown/dropdown.scss';
 
 @import 'katex/dist/katex.min.css';
-@import './GFML/gfml.scss'
+@import './GFML/gfml.scss';
+
+a {
+  @apply text-sky-600 hover:text-sky-500 active:text-sky-700;
+}

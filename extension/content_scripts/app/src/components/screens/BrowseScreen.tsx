@@ -4,7 +4,6 @@ import { EntryContent } from '../EntryContent';
 import { Entry } from 'unfold-core';
 import { useNavigation } from '../../utils/useNavigation';
 import api from '../../utils/api';
-import { Editor } from 'unfold-plugins';
 
 export const BrowseScreen = (): JSX.Element => {
   const {
@@ -36,7 +35,6 @@ export const BrowseScreen = (): JSX.Element => {
       <div className="overflow-hidden">
         <div className="h-full max-h-[440px] overflow-hidden border-b border-gray-200 bg-white">
           <div className="h-full overflow-y-auto px-3">
-            <Editor />
             <EntryContent entry={entry} />
           </div>
         </div>

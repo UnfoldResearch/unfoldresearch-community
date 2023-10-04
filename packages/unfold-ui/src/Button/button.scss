@@ -1,5 +1,5 @@
 .btn-base {
-  @apply inline-flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-xs;
+  @apply inline-flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-xs shrink-0;
   min-height: 24px;
   transition-property: color, background-color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

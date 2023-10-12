@@ -129,10 +129,10 @@ export const IconNameOptions = [
   'unfold',
 ] as const;
 
-export type IconName = typeof IconNameOptions[number];
+export type IconName = (typeof IconNameOptions)[number];
 
 export const IconTypeOptions = ['line', 'gestalt', 'filled', 'duocolor', 'duotone'] as const;
-export type IconType = typeof IconTypeOptions[number];
+export type IconType = (typeof IconTypeOptions)[number];
 
 export type IconProps = {
   icon: IconName;

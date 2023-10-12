@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "composite": true,
-    "outDir": "./dist",
+    "outDir": "./dist"
   },
   "exclude": ["node_modules"],
   "include": ["src"]

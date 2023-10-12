@@ -42,7 +42,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "mini-css-extract-plugin": "^2.6.1",
     "postcss": "8.4.19",
-    "prettier": "2.7.1",
+    "prettier": "*",
     "prettier-plugin-tailwindcss": "0.1.13",
     "react-app-rewired": "^2.2.1",
     "sass": "1.56.1",

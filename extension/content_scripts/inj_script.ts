@@ -24,7 +24,7 @@ const notifyPage = (): void => {
     {
       type: "unfold-reroute",
     },
-    "*"
+    "*",
   );
 };
 

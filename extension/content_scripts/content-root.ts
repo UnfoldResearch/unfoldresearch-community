@@ -48,7 +48,7 @@ const sendPageData = (): void => {
   ];
   const title = document.title;
   const ogDesc = document.head.querySelector(
-    `meta[property="og:description"]`
+    `meta[property="og:description"]`,
   )?.["content"];
   const metaDesc = document.head.querySelector(`meta[name="description"]`)?.[
     "content"
@@ -61,7 +61,7 @@ const sendPageData = (): void => {
       title: ogTitle || title || url,
       description: ogDesc || metaDesc || "",
     },
-    "*"
+    "*",
   );
 };
 

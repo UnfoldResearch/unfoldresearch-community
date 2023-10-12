@@ -4,7 +4,7 @@ This project used [react-browser-extension](https://github.com/abstractalgo/reac
 
 ```bash
 cd extension/content_scripts/app
-yarn dev
+bun dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see the frontend.
@@ -15,7 +15,7 @@ First build it with:
 
 ```bash
 cd extension
-yarn build
+bun run build
 ```
 
 Then open Chrome browser, go to Extensions, turn on "Developer Mode" (top right), click on "Load Unpacked" and selected `./extension/build` folder.

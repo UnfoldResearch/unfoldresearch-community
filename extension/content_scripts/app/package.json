@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "react-app-rewired start",
     "rewire-config": "tsc --removeComments config-overrides.ts",
-    "build": "yarn react-app-rewired build"
+    "build": "bun run react-app-rewired build"
   },
   "dependencies": {
     "@blueprintjs/popover2": "^1.6.3",

@@ -7,7 +7,7 @@
   "scripts": {
     "prepare": "tsc -b",
     "build": "tsc -b",
-    "rebuild": "yarn build"
+    "rebuild": "bun run build"
   },
   "exports": {
     ".": "./dist/index.js"

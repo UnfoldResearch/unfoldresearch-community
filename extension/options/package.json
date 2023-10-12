@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "PORT=3001 react-app-rewired start",
     "rewire-config": "tsc --removeComments config-overrides.ts",
-    "build": "yarn react-app-rewired build"
+    "build": "bun run react-app-rewired build"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",

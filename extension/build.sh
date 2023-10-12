@@ -22,11 +22,11 @@ COL_NONE='\033[0m'
 
 # update overrides
 # cd option
-# yarn rewire-config
+# bun run rewire-config
 # cd ../popup
-# yarn rewire-config
+# bun run rewire-config
 # cd content_scripts/app
-# yarn rewire-config
+# bun run rewire-config
 # cd ../..
 
 # cleanup
@@ -42,7 +42,7 @@ cp logo_sm.png $OUTPUT_DIR/logo_sm.png
 # build popup
 # printf "${COL_CYAN}# Building popup page...${COL_NONE}\n"
 # cd popup
-# yarn build
+# bun run build
 # cp build/index.html ../$OUTPUT_DIR/popup.html
 # cp build/popup-main.js ../$OUTPUT_DIR/popup-main.js
 # cp build/popup-main.js.map ../$OUTPUT_DIR/popup-main.js.map # source map
@@ -55,7 +55,7 @@ cp content.html ../$OUTPUT_DIR/content.html
 cp content-root.css ../$OUTPUT_DIR/content-root.css
 npx tsc content-root.ts inj_script.ts --outDir ../$OUTPUT_DIR
 cd app
-yarn build
+bun run build
 cp build/content-react.js ../../$OUTPUT_DIR/content-react.js
 cp build/content-react.js.map ../../$OUTPUT_DIR/content-react.js.map # source map
 cd ../..
@@ -63,14 +63,14 @@ cd ../..
 # build worker
 # printf "${COL_CYAN}# Building worker scripts...${COL_NONE}\n"
 # cd worker
-# yarn build
+# bun run build
 # cp build/background.js ../$OUTPUT_DIR/background.js
 # cd ..
 
 # build options page
 # printf "${COL_CYAN}# Building options page...${COL_NONE}\n"
 # cd options
-# yarn build
+# bun run build
 # cp build/index.html ../$OUTPUT_DIR/options.html
 # cp build/options-main.js ../$OUTPUT_DIR/options-main.js
 # cp build/options-main.js.map ../$OUTPUT_DIR/options-main.js.map # source map

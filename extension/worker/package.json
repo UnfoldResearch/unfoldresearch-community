@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "rewire-config": "tsc --removeComments config-overrides.ts",
-    "build": "yarn webpack"
+    "build": "bun run webpack"
   },
   "devDependencies": {
     "ts-loader": "^9.2.6",

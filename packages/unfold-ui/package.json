@@ -19,7 +19,7 @@
   "scripts": {
     "prepare": "tsc -b",
     "build": "tsc -b",
-    "rebuild": "yarn build"
+    "rebuild": "bun run build"
   },
   "dependencies": {
     "@blueprintjs/popover2": "^1.6.3",

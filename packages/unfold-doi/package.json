@@ -24,7 +24,7 @@
   "scripts": {
     "prepare": "tsc -b",
     "build": "tsc -b",
-    "rebuild": "yarn build",
+    "rebuild": "bun run build",
     "build:single": "tsc src/index.ts --outFile unfold-doi.js --module amd --moduleResolution node"
   }
 }

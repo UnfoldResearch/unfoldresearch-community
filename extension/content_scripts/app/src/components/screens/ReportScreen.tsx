@@ -13,7 +13,7 @@ export const ReportScreen = (): JSX.Element => {
   const [reportDesc, setReportDesc] = useState('');
 
   useEffect(() => {
-    analytics.events.track('ext.navigation.report', {
+    analytics.events.track('navigation.report', {
       entryId: current.entry.id,
       title: current.entry.title,
       authorId: current.entry.createdBy.id,
@@ -38,7 +38,7 @@ export const ReportScreen = (): JSX.Element => {
       if (!res) {
         return;
       }
-      analytics.events.track('ext.report.created', {
+      analytics.events.track('report.created', {
         entryId: current.entry.id,
         title: current.entry.title,
         authorId: current.entry.createdBy.id,
@@ -86,7 +86,7 @@ export const ReportScreen = (): JSX.Element => {
           className="w-full justify-center"
           onClick={() => {
             goToBrowse(current.entry);
-            analytics.events.track('ext.report.cancel', {
+            analytics.events.track('report.cancel', {
               entryId: current.entry.id,
               title: current.entry.title,
               authorId: current.entry.createdBy.id,

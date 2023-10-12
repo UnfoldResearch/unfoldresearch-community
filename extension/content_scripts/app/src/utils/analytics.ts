@@ -1,5 +1,5 @@
 import mixpanel, { Callback } from 'mixpanel-browser';
-import { AnalyticsEvents } from 'unfold-analytics';
+import { AnalyticsEvent } from 'unfold-analytics';
 import { MIXPANEL_TOKEN } from 'unfold-core';
 import { isDev } from 'unfold-utils';
 
@@ -15,13 +15,13 @@ if (!isDev()) {
 // -----------------------------------------------------------------------------
 
 // https://developer.mixpanel.com/docs/javascript-full-api-reference#mixpaneltime_event
-const timeEvent = (eventName: keyof AnalyticsEvents): void => mixpanel.time_event(eventName);
+const timeEvent = (eventName: keyof AnalyticsEvent): void => mixpanel.time_event(eventName);
 
 // https://developer.mixpanel.com/docs/javascript-full-api-reference#mixpaneltrack
-const track = <EventName extends keyof AnalyticsEvents>(
-  ...[eventName, properties]: AnalyticsEvents[EventName] extends null
+const track = <EventName extends keyof AnalyticsEvent>(
+  ...[eventName, properties]: AnalyticsEvent[EventName] extends null
     ? [EventName]
-    : [EventName, NonNullable<AnalyticsEvents[EventName]>]
+    : [EventName, NonNullable<AnalyticsEvent[EventName]>]
 ): void => {
   if (properties) {
     mixpanel.track(eventName, properties);

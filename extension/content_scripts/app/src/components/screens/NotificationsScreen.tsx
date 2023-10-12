@@ -12,7 +12,7 @@ export const NotificationsScreen = (): JSX.Element => {
   // const [pagesLoaded, setPagesLoaded] = useState(0);
 
   useEffect(() => {
-    analytics.events.track('ext.navigation.notifications');
+    analytics.events.track('navigation.notifications');
 
     const fetchNotifs = async () => {
       const res = await api.notification.get({});

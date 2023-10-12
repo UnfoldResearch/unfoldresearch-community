@@ -6,4 +6,3 @@ package-lock.json
 yarn-error.log
 .turbo
 .yarn
-.yarnrc.yml

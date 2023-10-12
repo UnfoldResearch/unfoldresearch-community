@@ -32,7 +32,7 @@ export const UserScreen = (): JSX.Element => {
     };
 
     fetchUserDetails();
-    analytics.events.track('ext.navigation.user', {
+    analytics.events.track('navigation.user', {
       userId: current.userId,
     });
   }, []);

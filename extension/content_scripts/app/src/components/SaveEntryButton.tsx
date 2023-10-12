@@ -34,36 +34,33 @@ export const SaveEntryButton = ({ entry }: SaveEntryButtonProps): JSX.Element =>
     }
 
     const toggleSave = async () => {
-      if (!isInCollections) {
-        const res = await api.collection.create({
-          parentId: null,
-          type: 'entry',
-          entryId: entry.id,
-          title: entry.title,
-          format: entry.format,
-        });
-
-        if (res) {
-          setIsInCollections(true);
-          analytics.events.track('ext.collection.created_entry', {
-            entryId: entry.id,
-            title: entry.title,
-            authorId: entry.createdBy.id,
-            authorDisplayName: entry.createdBy.displayName,
-          });
-        }
-      } else {
-        await api.collection.deleteByEntry({
-          entryId: entry.id,
-        });
-
-        setIsInCollections(false);
-
-        analytics.events.track('ext.collection.removed', {
-          entryId: entry.id,
-          title: entry.title,
-        });
-      }
+      // if (!isInCollections) {
+      //   const res = await api.collection.create({
+      //     parentId: null,
+      //     type: 'entry',
+      //     entryId: entry.id,
+      //     title: entry.title,
+      //     // format: entry.format,
+      //   });
+      //   if (res) {
+      //     setIsInCollections(true);
+      //     analytics.events.track('collection.created_entry', {
+      //       entryId: entry.id,
+      //       title: entry.title,
+      //       authorId: entry.createdBy.id,
+      //       authorDisplayName: entry.createdBy.displayName,
+      //     });
+      //   }
+      // } else {
+      //   await api.collection.deleteByEntry({
+      //     entryId: entry.id,
+      //   });
+      //   setIsInCollections(false);
+      //   analytics.events.track('collection.removed', {
+      //     entryId: entry.id,
+      //     title: entry.title,
+      //   });
+      // }
     };
 
     toggleSave();

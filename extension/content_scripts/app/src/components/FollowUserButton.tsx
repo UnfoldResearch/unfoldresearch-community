@@ -39,7 +39,7 @@ export const FollowUserButton = ({ user }: FollowUserButtonProps): JSX.Element =
         });
 
         if (res) {
-          analytics.events.track('ext.subscription.follow_user', {
+          analytics.events.track('subscription.follow_user', {
             userId: user.id,
           });
           setIsFollowing(true);
@@ -50,7 +50,7 @@ export const FollowUserButton = ({ user }: FollowUserButtonProps): JSX.Element =
         });
 
         if (res) {
-          analytics.events.track('ext.subscription.unfollow_user', {
+          analytics.events.track('subscription.unfollow_user', {
             userId: user.id,
           });
           setIsFollowing(false);

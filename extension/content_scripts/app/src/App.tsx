@@ -25,7 +25,7 @@ const App = (): JSX.Element => {
       toggleExpanded={() => {
         setExpanded(!expanded);
         expandedRef.current = !expanded;
-        analytics.events.track('ext.sidebar.toggle');
+        analytics.events.track('sidebar.toggle');
       }}
       expanded={expanded}
     />

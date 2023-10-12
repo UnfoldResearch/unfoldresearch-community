@@ -1,12 +1,11 @@
 import { ReactNode, useState } from 'react';
 import { EntryFull, isAuthorBot } from 'unfold-core';
 import { Button, EntryTitle, EntryVoter, EntryPostingMeta, EntryLinkedTo } from 'unfold-ui';
-import { FormatContentComponent, FormatMeta, Format as NarrowFormat } from 'unfold-plugins';
+import { FormatContentComponent } from 'unfold-plugins';
 import { Popover2 } from '@blueprintjs/popover2';
 
 import { useNavigation } from '../utils/useNavigation';
 import { useAuth } from '../utils/useAuth';
-import { FilesInput } from './FilesInput';
 import api from '../utils/api';
 import analytics from '../utils/analytics';
 import { SaveEntryButton } from './SaveEntryButton';
@@ -53,7 +52,7 @@ export const EntryContent = ({ entry, actions }: EntryContentProps): JSX.Element
                 vote: res.hasVoted,
                 score: res.score,
               });
-              analytics.events.track('ext.vote.voted', {
+              analytics.events.track('vote.voted', {
                 entryId: entry.id,
                 title: entry.title,
                 authorId: entry.createdBy.id,
@@ -75,7 +74,7 @@ export const EntryContent = ({ entry, actions }: EntryContentProps): JSX.Element
                 vote: res.hasVoted,
                 score: res.score,
               });
-              analytics.events.track('ext.vote.voted', {
+              analytics.events.track('vote.voted', {
                 entryId: entry.id,
                 title: entry.title,
                 authorId: entry.createdBy.id,
@@ -120,7 +119,7 @@ export const EntryContent = ({ entry, actions }: EntryContentProps): JSX.Element
                               entryId: entry.id,
                             });
 
-                            analytics.events.track('ext.entry.deleted', {
+                            analytics.events.track('entry.deleted', {
                               title: entry.title,
                               id: entry.id,
                             });
@@ -173,7 +172,7 @@ export const EntryContent = ({ entry, actions }: EntryContentProps): JSX.Element
       </div>
 
       <div className="mb-0.5 grid grid-cols-m1 items-center gap-1 overflow-hidden">
-        <FormatMeta format={entry.format as NarrowFormat} />
+        {/* <FormatMeta format={entry.format as NarrowFormat} /> */}
         <EntryLinkedTo
           entry={entry}
           as="div"
@@ -192,7 +191,7 @@ export const EntryContent = ({ entry, actions }: EntryContentProps): JSX.Element
       <FormatContentComponent
         isPreview
         query=""
-        format={entry.format as NarrowFormat}
+        // format={entry.format as NarrowFormat}
         data={
           {
             // TODO
@@ -200,12 +199,6 @@ export const EntryContent = ({ entry, actions }: EntryContentProps): JSX.Element
         }
         setData={() => {}}
       />
-
-      {entry.files && entry.files.length > 0 && (
-        <div className="pt-3">
-          <FilesInput files={entry.files} />
-        </div>
-      )}
 
       <div className="flex flex-col gap-1 pt-3">
         <EntryPostingMeta

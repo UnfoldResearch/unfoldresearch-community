@@ -38,7 +38,7 @@ export const ResizableWrapper = forwardRef<HTMLDivElement, WrapperProps>(
         resizeActive.current = false;
         onResize?.(resizeActive.current);
         document.documentElement.style.cursor = 'default';
-        analytics.events.track('ext.sidebar.resize');
+        analytics.events.track('sidebar.resize');
       });
     }, []);
 

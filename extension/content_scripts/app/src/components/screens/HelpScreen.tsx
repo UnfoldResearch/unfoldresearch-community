@@ -12,7 +12,7 @@ export const HelpScreen = (): JSX.Element => {
   const { goToUser, goToFeedback } = useNavigation();
 
   useEffect(() => {
-    analytics.events.track('ext.navigation.help');
+    analytics.events.track('navigation.help');
   }, []);
 
   return (

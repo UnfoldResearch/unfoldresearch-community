@@ -37,7 +37,7 @@ export const LibraryScreen = (): JSX.Element => {
 
     fetchCollections();
 
-    analytics.events.track('ext.navigation.collections', {
+    analytics.events.track('navigation.collections', {
       isSelf: true,
     });
   }, []);
@@ -67,7 +67,7 @@ export const LibraryScreen = (): JSX.Element => {
       id: selectedCollection.id,
     });
 
-    analytics.events.track('ext.collection.removed', {
+    analytics.events.track('collection.removed', {
       collectionId: selectedCollection.id,
       title: selectedCollection.title,
     });

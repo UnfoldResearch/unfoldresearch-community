@@ -44,7 +44,7 @@ export const SaveUserButton = ({ user }: SaveUserButtonProps): JSX.Element => {
 
         if (res) {
           setIsInCollections(true);
-          analytics.events.track('ext.collection.created_user', {
+          analytics.events.track('collection.created_user', {
             userId: user.id,
           });
         }
@@ -55,7 +55,7 @@ export const SaveUserButton = ({ user }: SaveUserButtonProps): JSX.Element => {
 
         setIsInCollections(false);
 
-        analytics.events.track('ext.collection.removed', {
+        analytics.events.track('collection.removed', {
           userId: user.id,
         });
       }

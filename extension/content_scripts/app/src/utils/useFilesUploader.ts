@@ -192,6 +192,10 @@ export const useFilesUploader = (files: UFile[] = []): UseFilesUploader => {
   };
 
   const getDownloadUrl: UseFilesUploader['getDownloadUrl'] = async (file) => {
+    if (file.file.isFolder) {
+      return 'this file is folder (not implemented)';
+    }
+
     try {
       const res = await api.file.download({
         fileS3Key: file.file.s3Key,

@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
 import cn from 'classnames';
-import { Format } from 'unfold-core';
 import { formatAmount, useOptions } from 'unfold-utils';
 import { Button, Spinner, BirdLogo } from 'unfold-ui';
 import { FormatIcon, Format as NarrowFormat } from 'unfold-plugins';
@@ -20,7 +19,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
   const { options } = useOptions();
   const { current, goToBrowse, goToNotifications, goToHelp, goToLibrary } = useNavigation();
   const { user } = useAuth();
-  const [counts, setCounts] = useState<Partial<Record<Format, number>> | null>(null);
+  const [counts, setCounts] = useState<Partial<Record<string, number>> | null>(null);
   const [hasNotifs, setHasNotifs] = useState(false);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
         setCounts(res);
 
         // const url = new URL(currentPage.url);
-        // analytics.events.track('ext.navigation.count', {
+        // analytics.events.track('navigation.count', {
         //   url: currentPage.url,
         //   hostname: url.hostname,
         //   withUser: user !== null,
@@ -127,7 +126,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
         {counts ? (
           !expanded ? (
             <div className="flex flex-col gap-1">
-              {(Object.entries(counts) as [Format, number][])
+              {(Object.entries(counts) as [string, number][])
                 .filter(([, cnt]) => cnt)
                 .map(([format, cnt]) => (
                   <div className="flex items-center gap-1" key={format}>

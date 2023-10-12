@@ -21,7 +21,7 @@ export const EntryPreview = ({ entry, onClick }: EntryPreviewProps): JSX.Element
 
       <div>
         <div className="mb-0.5 flex justify-between text-xxs text-gray-400">
-          <FormatMeta format={entry.format as Format} />
+          {/* <FormatMeta format={entry.format as Format} /> */}
           <EntryPostingMeta
             entry={entry}
             type="short"

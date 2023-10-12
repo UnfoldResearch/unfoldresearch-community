@@ -3,7 +3,6 @@ import { Collection } from 'unfold-core';
 import { Icon, IconName, GFML } from 'unfold-ui';
 import cn from 'classnames';
 import { useClickOutside } from '../utils/useClickOutside';
-import { FormatIcon, Format as NarrowFormat } from 'unfold-plugins';
 
 export type HierarchicalCollection = Collection & {
   children: HierarchicalCollection[];
@@ -132,7 +131,7 @@ const CollectionItem = ({
       case null:
         return expandedCollections[collection.id] ? 'folder-open' : 'folder';
       case 'entry':
-        return <FormatIcon format={collection.format as NarrowFormat} />;
+        return <div></div>; //<FormatIcon format={collection.format as NarrowFormat} />;
       case 'user':
         return 'user';
       default:

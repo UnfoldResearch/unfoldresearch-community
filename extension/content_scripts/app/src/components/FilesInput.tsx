@@ -377,7 +377,7 @@ const FileItem = ({
                     if (res && aRef.current) {
                       aRef.current.href = res.url;
                       aRef.current.click();
-                      analytics.events.track('ext.files.download', {
+                      analytics.events.track('files.download', {
                         fileId: file.id,
                       });
                     }

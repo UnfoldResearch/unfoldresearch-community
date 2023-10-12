@@ -69,7 +69,7 @@ export const FeedbackScreen = (): JSX.Element => {
           minimal
           onClick={() => {
             goToHelp();
-            analytics.events.track('ext.feedback.cancel');
+            analytics.events.track('feedback.cancel');
           }}
           className="w-full justify-center"
         >

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { License, File, LicenseOptionsMeta } from 'unfold-core';
-import { FormatMeta, FormatPickerInput, FormatContentComponent, Format } from 'unfold-plugins';
 import { Button, IconName, LicenseInput, Input, GFML, SectionToggle } from 'unfold-ui';
 
 import { useNavigation } from '../../utils/useNavigation';
@@ -25,7 +24,7 @@ export const SubmitScreen = (): JSX.Element => {
   const [title, setTitle] = useState('');
   const [files, setFiles] = useState<File[]>([]);
   const [format, setFormat] = useState<string | null>(null);
-  const [content, setContent] = useState<unknown>(undefined);
+  const [content, setContent] = useState<string>('');
   const [contentNextStep, setContentNextStep] = useState<NextStepMeta>(null);
   // const [tags, setTags] = useState<Tag[]>([]);
   const [license, setLicense] = useState<{ key: License; description: string }>({
@@ -34,7 +33,7 @@ export const SubmitScreen = (): JSX.Element => {
   });
 
   useEffect(() => {
-    analytics.events.track('ext.navigation.submit', {
+    analytics.events.track('navigation.submit', {
       parentId: current.parent.id,
       parentTitle: current.parent.title,
     });
@@ -93,11 +92,10 @@ export const SubmitScreen = (): JSX.Element => {
       const createdEntry = await api.entry.submit({
         url: typeof current.parent === 'string' ? current.parent : null,
         parentId: typeof current.parent === 'string' ? null : current.parent.id,
-        format,
+        // format,
         title,
         license: license.key,
         licenseDescription: license.description,
-        files: files.map((f) => f.id),
         // tags: tags.map((tag) => tag.id),
       });
       // analytics.events.track('Submitted an Entry', {
@@ -108,7 +106,7 @@ export const SubmitScreen = (): JSX.Element => {
 
       if (createdEntry) {
         goToBrowse(createdEntry);
-        analytics.events.track('ext.entry.created', {
+        analytics.events.track('entry.created', {
           title: createdEntry.title,
           id: createdEntry.id,
         });
@@ -126,7 +124,7 @@ export const SubmitScreen = (): JSX.Element => {
       icon={!isPreview ? 'eye' : 'eye-slash'}
       title={!isPreview ? 'Preview' : 'Close preview'}
       onClick={() => {
-        analytics.events.track('ext.submit.preview_toggle', {
+        analytics.events.track('submit.preview_toggle', {
           is_preview: isPreview,
         });
         setIsPreview(!isPreview);
@@ -144,7 +142,7 @@ export const SubmitScreen = (): JSX.Element => {
         minimal
         onClick={() => {
           goToBrowse(current.parent);
-          analytics.events.track('ext.submit.cancel');
+          analytics.events.track('submit.cancel');
         }}
         className="w-full justify-center"
       >
@@ -177,11 +175,10 @@ export const SubmitScreen = (): JSX.Element => {
                       title: current.parent.title,
                     },
               url: typeof current.parent === 'string' ? current.parent : null,
-              format: format || 'paper',
+              // format: format || 'paper',
               title: title || '(untitled)',
               license: license.key,
               licenseDescription: license.description ?? '',
-              files,
             }}
           />
         </div>
@@ -201,7 +198,7 @@ export const SubmitScreen = (): JSX.Element => {
               <div>{current.parent}</div>
             ) : (
               <div className="flex flex-col gap-0.5">
-                <FormatMeta format={current.parent.format as Format} />
+                {/* <FormatMeta format={current.parent.format as Format} /> */}
                 <GFML text={current.parent.title} nonInteractive className="faded" />
               </div>
             )}
@@ -212,7 +209,7 @@ export const SubmitScreen = (): JSX.Element => {
 
         <hr className="my-2 mb-4" />
 
-        <SectionToggle
+        {/* <SectionToggle
           header={(exp) => (
             <div className="flex flex-row items-center gap-1">
               <span className="font-semibold">Type:</span>
@@ -229,13 +226,13 @@ export const SubmitScreen = (): JSX.Element => {
               value={format as Format}
               onChange={(newFormat) => {
                 setFormat(newFormat);
-                analytics.events.track('ext.submit.type_change', {
+                analytics.events.track('submit.type_change', {
                   format: newFormat,
                 });
               }}
             />
           </div>
-        </SectionToggle>
+        </SectionToggle> */}
 
         <SectionToggle
           inert
@@ -244,17 +241,17 @@ export const SubmitScreen = (): JSX.Element => {
         >
           <Input className="w-full" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
         </SectionToggle>
-
+        {/*
         {format && (
           <FormatContentComponent
             isPreview={isPreview}
             query=""
-            format={format as Format}
+            // format={format as Format}
             data={content}
             setData={setContent}
             setNextStep={setContentNextStep}
           />
-        )}
+        )} */}
 
         <SectionToggle
           className="my-3"
@@ -286,7 +283,7 @@ export const SubmitScreen = (): JSX.Element => {
               files={files}
               onChange={(newFiles) => {
                 setFiles(newFiles);
-                analytics.events.track('ext.submit.files_change', {
+                analytics.events.track('submit.files_change', {
                   filesCount: files.length,
                   op: files.length < newFiles.length ? 'add' : 'rm',
                 });

@@ -132,7 +132,7 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
         });
       };
       setNav({ screen: 'browse', entry: res.entry, setVote });
-      analytics.events.track('ext.navigation.entry', {
+      analytics.events.track('navigation.entry', {
         entryId: res.entry.id,
         title: res.entry.title,
         authorId: res.entry.createdBy.id,
@@ -155,27 +155,29 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
             return;
           }
 
-          const res = await api.entry.getEntryById({
-            entryId: targetEntry.id,
-          });
+          const entry = (
+            await api.entry.getEntryById({
+              entryId: targetEntry.id,
+            })
+          )?.entry;
 
-          if (res && res.entry) {
+          if (entry) {
             const setVote: Extract<NavigationPage, { screen: 'browse' }>['setVote'] = ({ score, vote }) => {
               setNav({
                 screen: 'browse',
                 entry: {
-                  ...res.entry,
+                  ...entry,
                   score,
                   vote,
                 },
                 setVote,
               });
             };
-            setNav({ screen: 'browse', entry: res.entry, setVote });
-            analytics.events.track('ext.navigation.entry', {
-              entryId: res.entry.id,
-              title: res.entry.title,
-              authorId: res.entry.createdBy.id,
+            setNav({ screen: 'browse', entry: entry, setVote });
+            analytics.events.track('navigation.entry', {
+              entryId: entry.id,
+              title: entry.title,
+              authorId: entry.createdBy.id,
             });
           }
         },

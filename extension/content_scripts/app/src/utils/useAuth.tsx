@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         $name: data.displayName,
         emailVerified: false,
       });
-      analytics.events.track('ext.user.registration');
+      analytics.events.track('user.registration');
     }
 
     return regResult;
@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     analytics.people.identify(loginRes.id);
-    analytics.events.track('ext.user.login');
+    analytics.events.track('user.login');
     analytics.people.props.set({
       emailVerified: true,
     });
@@ -127,7 +127,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout: Auth['logout'] = async () => {
     setUser(null);
     await extStorage.remove('auth::access_token');
-    analytics.events.track('ext.user.logout');
+    analytics.events.track('user.logout');
     analytics.people.reset();
   };
 

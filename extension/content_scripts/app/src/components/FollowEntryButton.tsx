@@ -39,7 +39,7 @@ export const FollowEntryButton = ({ entry }: FollowEntryButtonProps): JSX.Elemen
         });
 
         if (res) {
-          analytics.events.track('ext.subscription.follow_entry', {
+          analytics.events.track('subscription.follow_entry', {
             entryId: entry.id,
           });
           setIsFollowing(true);
@@ -50,7 +50,7 @@ export const FollowEntryButton = ({ entry }: FollowEntryButtonProps): JSX.Elemen
         });
 
         if (res) {
-          analytics.events.track('ext.subscription.unfollow_entry', {
+          analytics.events.track('subscription.unfollow_entry', {
             entryId: entry.id,
           });
           setIsFollowing(false);

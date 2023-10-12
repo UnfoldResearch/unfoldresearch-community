@@ -39,9 +39,9 @@ const overridePath = (config: webpack.Configuration): webpack.Configuration => {
 
   const newIncludePaths = [
     // relative path to my bun run workspace library
-    path.resolve(__dirname, '../..packages//unfold-core'),
-    path.resolve(__dirname, '../../packages/unfold-ui'),
-    path.resolve(__dirname, '../../packages/unfold-utils'),
+    path.resolve(__dirname, '../..modules//unfold-core'),
+    path.resolve(__dirname, '../../modules/unfold-ui'),
+    path.resolve(__dirname, '../../modules/unfold-utils'),
   ];
 
   if (Array.isArray(tsRule.include)) {

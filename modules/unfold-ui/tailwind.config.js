@@ -4,7 +4,7 @@ module.exports = {
     // files from this project
     './**/*.{tsx,ts}',
     // make sure to "see" the classnames from the UI package's files as well
-    '**/packages/**/src/**/*.{tsx,ts}',
+    '**/modules/**/src/**/*.{tsx,ts}',
     'web/**/*.{tsx,ts}',
     '../../web/**/*.{tsx,ts}',
   ],

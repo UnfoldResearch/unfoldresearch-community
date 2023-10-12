@@ -28,9 +28,9 @@ var overridePath = function (config) {
     return config;
   }
   var newIncludePaths = [
-    path.resolve(__dirname, '../../packages/unfold-core'),
-    path.resolve(__dirname, '../../packages/unfold-ui'),
-    path.resolve(__dirname, '../../packages/unfold-utils')
+    path.resolve(__dirname, '../../modules/unfold-core'),
+    path.resolve(__dirname, '../../modules/unfold-ui'),
+    path.resolve(__dirname, '../../modules/unfold-utils')
   ];
   if (Array.isArray(tsRule.include)) {
     tsRule.include = __spreadArray(__spreadArray([], tsRule.include, true), newIncludePaths, true);

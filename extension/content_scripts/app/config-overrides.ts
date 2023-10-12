@@ -38,9 +38,9 @@ const overridePath = (config: webpack.Configuration): webpack.Configuration => {
     return config;
   }
 
-  const packageDirs = readdirSync(path.join(__dirname, '../../../packages'));
+  const packageDirs = readdirSync(path.join(__dirname, '../../../modules'));
 
-  const newIncludePaths = packageDirs.map((pkg) => path.resolve(__dirname, '../../../packages', pkg));
+  const newIncludePaths = packageDirs.map((pkg) => path.resolve(__dirname, '../../../modules', pkg));
 
   if (Array.isArray(tsRule.include)) {
     tsRule.include = [...tsRule.include, ...newIncludePaths];

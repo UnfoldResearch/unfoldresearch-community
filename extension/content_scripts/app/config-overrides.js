@@ -22,8 +22,8 @@ var overridePath = function (config) {
     if (!tsRule) {
         return config;
     }
-    var packageDirs = (0, fs_1.readdirSync)(path.join(__dirname, '../../../packages'));
-    var newIncludePaths = packageDirs.map(function (pkg) { return path.resolve(__dirname, '../../../packages', pkg); });
+    var packageDirs = (0, fs_1.readdirSync)(path.join(__dirname, '../../../modules'));
+    var newIncludePaths = packageDirs.map(function (pkg) { return path.resolve(__dirname, '../../../modules', pkg); });
     if (Array.isArray(tsRule.include)) {
         tsRule.include = __spreadArray(__spreadArray([], tsRule.include, true), newIncludePaths, true);
     }

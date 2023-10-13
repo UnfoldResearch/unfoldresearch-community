@@ -22,10 +22,10 @@ export const SubmitScreen = (): JSX.Element => {
   const [isPreview, setIsPreview] = useState(false);
 
   const [title, setTitle] = useState('');
-  const [files, setFiles] = useState<File[]>([]);
-  const [format, setFormat] = useState<string | null>(null);
+  // const [files, setFiles] = useState<File[]>([]);
+  // const [format, setFormat] = useState<string | null>(null);
   const [content, setContent] = useState<string>('');
-  const [contentNextStep, setContentNextStep] = useState<NextStepMeta>(null);
+  // const [contentNextStep, setContentNextStep] = useState<NextStepMeta>(null);
   // const [tags, setTags] = useState<Tag[]>([]);
   const [license, setLicense] = useState<{ key: License; description: string }>({
     key: 'cc-by-sa-4.0',
@@ -46,8 +46,8 @@ export const SubmitScreen = (): JSX.Element => {
   } = (() => {
     const isDisabled =
       !title ||
-      !!contentNextStep ||
-      !format ||
+      // !!contentNextStep ||
+      // !format ||
       status === 'submitting' ||
       (license.key === 'custom' && !license.description);
 
@@ -55,10 +55,10 @@ export const SubmitScreen = (): JSX.Element => {
     let btnText = 'Submit';
     if (!title) {
       btnText = 'Title not set';
-    } else if (!format) {
-      btnText = `Type not set`;
-    } else if (contentNextStep) {
-      btnText = contentNextStep.text;
+      // } else if (!format) {
+      //   btnText = `Type not set`;
+      // } else if (contentNextStep) {
+      //   btnText = contentNextStep.text;
     } else if (license.key === 'custom' && !license.description) {
       btnText = 'License description is empty';
     }
@@ -83,7 +83,7 @@ export const SubmitScreen = (): JSX.Element => {
   })();
 
   const onSubmit = async () => {
-    if (status === 'submitting' || !format) {
+    if (status === 'submitting') {
       return;
     }
 
@@ -253,7 +253,7 @@ export const SubmitScreen = (): JSX.Element => {
           />
         )} */}
 
-        <SectionToggle
+        {/* <SectionToggle
           className="my-3"
           header={(exp) => (
             <div>
@@ -290,7 +290,7 @@ export const SubmitScreen = (): JSX.Element => {
               }}
             />
           </div>
-        </SectionToggle>
+        </SectionToggle> */}
 
         {/* <SectionToggle
         header={(exp) => (

@@ -30,10 +30,11 @@ type JWTPayload = {
   displayName: string;
   score: number;
   email: string;
-  fullName: string;
+  isEmailVerified: boolean;
   createdAt: string;
   iat: number;
-  exp: number;
+  // fullName: string;
+  // exp: number;
 };
 
 const AuthContext = createContext<Auth>({

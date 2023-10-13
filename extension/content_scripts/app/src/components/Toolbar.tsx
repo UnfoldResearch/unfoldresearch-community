@@ -49,22 +49,22 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
   }, [currentPage]);
 
   useEffect(() => {
-    const fetchNotifs = async () => {
-      const res = await api.notification.count();
-      if (res) {
-        setHasNotifs(res.count > 0);
-      }
-    };
+    // const fetchNotifs = async () => {
+    //   const res = await api.notification.count();
+    //   if (res) {
+    //     setHasNotifs(res.count > 0);
+    //   }
+    // };
 
-    fetchNotifs();
+    // fetchNotifs();
   }, []);
 
   const openNotifications = async () => {
-    goToNotifications();
-    const res = await api.notification.markAll();
-    if (res && res.success) {
-      setHasNotifs(false);
-    }
+    // goToNotifications();
+    // const res = await api.notification.markAll();
+    // if (res && res.success) {
+    //   setHasNotifs(false);
+    // }
   };
 
   const hasAnyContent = counts && Object.values(counts).some((cnt) => (cnt ?? 0) > 0);

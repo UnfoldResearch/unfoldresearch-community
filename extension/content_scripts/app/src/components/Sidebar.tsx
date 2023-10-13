@@ -15,13 +15,13 @@ const SCREEN: Record<Navigation['current']['screen'], () => JSX.Element> = {
   auth: AuthScreen,
   browse: BrowseScreen,
   help: HelpScreen,
-  library: LibraryScreen,
-  report: ReportScreen,
+  // library: LibraryScreen,
+  // report: ReportScreen,
   submit: SubmitScreen,
-  user: UserScreen,
+  // user: UserScreen,
   notifications: NotificationsScreen,
   alerts: AlertsScreen,
-  feedback: FeedbackScreen,
+  // feedback: FeedbackScreen,
 };
 
 export const Sidebar = (): JSX.Element => {

@@ -12,12 +12,12 @@ import { PageDataProvider } from './utils/usePageData';
 
 createRoot(document.getElementById('content-script-root')!).render(
   <React.StrictMode>
-    <PageDataProvider>
-      <AuthProvider>
-        <NavigationProvider>
+    <AuthProvider>
+      <NavigationProvider>
+        <PageDataProvider>
           <App />
-        </NavigationProvider>
-      </AuthProvider>
-    </PageDataProvider>
+        </PageDataProvider>
+      </NavigationProvider>
+    </AuthProvider>
   </React.StrictMode>,
 );

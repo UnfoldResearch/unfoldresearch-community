@@ -37,22 +37,18 @@ type JWTPayload = {
   // exp: number;
 };
 
-const AuthContext = createContext<Auth | null>(null);
+const AuthContext = createContext<Auth>({
+  user: null,
+  register: async () => undefined,
+  login: async () => {},
+  logout: () => {},
+  setShowOnboarding: () => {},
+});
 
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) {
-    throw new Error('AuthCtx is null');
-  }
-  return ctx;
-};
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<Auth['user']>(null);
-
-  useEffect(() => {
-    console.log(`user: ${!!user}`);
-  }, [user]);
 
   useEffect(() => {
     const getUser = async () => {

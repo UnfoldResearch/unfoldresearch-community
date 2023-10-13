@@ -15,36 +15,36 @@ type NavigationPage =
       entry: EntryFull;
       setVote: (voteDetails: Pick<EntryFull, 'vote' | 'score'>) => void;
     }
-  // | {
-  //     screen: 'report';
-  //     entry: Entry;
-  //   }
+  | {
+      screen: 'report';
+      entry: Entry;
+    }
   | {
       screen: 'submit';
       parent: Entry;
     }
-  // | {
-  //     screen: 'library';
-  //     ownerId: User['id'];
-  //     pendingItem:
-  //       | null
-  //       | {
-  //           type: 'entry';
-  //           entry: Entry;
-  //         }
-  //       | {
-  //           type: 'collection';
-  //           collection: Collection;
-  //         }
-  //       | {
-  //           type: 'user';
-  //           user: User;
-  //         };
-  //   }
-  // | {
-  //     screen: 'user';
-  //     userId: User['id'];
-  //   }
+  | {
+      screen: 'library';
+      ownerId: User['id'];
+      pendingItem:
+        | null
+        | {
+            type: 'entry';
+            entry: Entry;
+          }
+        | {
+            type: 'collection';
+            collection: Collection;
+          }
+        | {
+            type: 'user';
+            user: User;
+          };
+    }
+  | {
+      screen: 'user';
+      userId: User['id'];
+    }
   // | {
   //     screen: 'tag';
   //     tag: Tag;
@@ -58,10 +58,10 @@ type NavigationPage =
     }
   | {
       screen: 'help';
+    }
+  | {
+      screen: 'feedback';
     };
-// | {
-//     screen: 'feedback';
-//   };
 
 export type Navigation = {
   current: NavigationPage;
@@ -70,7 +70,7 @@ export type Navigation = {
   goToReport: (entry: Entry) => void;
   goToSubmit: (parent: Entry) => void;
   goToHelp: () => void;
-  // goToLibrary: (ownerId: User['id'], item?: Extract<NavigationPage, { screen: 'library' }>['pendingItem']) => void;
+  goToLibrary: (ownerId: User['id'], item?: Extract<NavigationPage, { screen: 'library' }>['pendingItem']) => void;
   goToUser: (userId: User['id']) => void;
   // goToTag: (tag: Tag) => void
   goToNotifications: () => void;
@@ -78,7 +78,21 @@ export type Navigation = {
   goToFeedback: () => void;
 };
 
-const NavigationCtx = createContext<Navigation | null>(null);
+const NavigationCtx = createContext<Navigation>({
+  current: {
+    screen: 'auth',
+  },
+  goToAuth: () => {},
+  goToBrowse: async () => {},
+  goToReport: () => {},
+  goToSubmit: () => {},
+  goToHelp: () => {},
+  goToLibrary: () => {},
+  goToUser: () => {},
+  goToNotifications: () => {},
+  // goToAlerts: () => {},
+  goToFeedback: () => {},
+});
 
 export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.Element => {
   const { user } = useAuth();
@@ -98,8 +112,6 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
     if (!currentPage || !user || currentPage.suppressed) {
       return;
     }
-
-    console.log('fetchngo');
 
     const res = await api.entry.getEntryByUrl({
       url: currentPage.url,
@@ -130,7 +142,7 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
 
   useEffect(() => {
     fetchCurrentUrlEntryAndGo();
-  }, [currentPage, user, currentPage, currentPage?.suppressed]);
+  }, [currentPage]);
 
   return (
     <NavigationCtx.Provider
@@ -170,8 +182,7 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
           }
         },
         goToReport: (entry: Entry) => {
-          console.log('goToReport Not implemented.');
-          // setNav({ screen: 'report', entry });
+          setNav({ screen: 'report', entry });
         },
         goToSubmit: (parent) => {
           setNav({ screen: 'submit', parent });
@@ -179,12 +190,11 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
         goToHelp: () => {
           setNav({ screen: 'help' });
         },
-        // goToLibrary: (ownerId, item) => {
-        //   setNav({ screen: 'library', ownerId, pendingItem: item ?? null });
-        // },
+        goToLibrary: (ownerId, item) => {
+          setNav({ screen: 'library', ownerId, pendingItem: item ?? null });
+        },
         goToUser: (userId) => {
-          console.log('goToUser Not implemented.');
-          // setNav({ screen: 'user', userId });
+          setNav({ screen: 'user', userId });
         },
         goToNotifications: () => {
           setNav({ screen: 'notifications' });
@@ -196,8 +206,7 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
         //   });
         // },
         goToFeedback: () => {
-          console.log('goToFeedback Not implemented.');
-          // setNav({ screen: 'feedback' });
+          setNav({ screen: 'feedback' });
         },
       }}
     >
@@ -207,13 +216,7 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
 };
 
 export function useNavigation<S extends NavigationPage['screen']>() {
-  const ctx = useContext(NavigationCtx) as Exclude<Navigation, 'current'> & {
+  return useContext(NavigationCtx) as Exclude<Navigation, 'current'> & {
     current: Extract<NavigationPage, { screen: S }>;
   };
-
-  if (!ctx) {
-    throw new Error('NavigationCtx is null.');
-  }
-
-  return ctx;
 }

@@ -17,7 +17,7 @@ type ToolbarProps = {
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpanded, expanded }, ref) => {
   const { current: currentPage } = usePageData();
   const { options } = useOptions();
-  const { current, goToBrowse, goToNotifications, goToHelp, goToLibrary } = useNavigation();
+  const { current, goToBrowse, goToNotifications, goToHelp } = useNavigation();
   const { user } = useAuth();
   const [counts, setCounts] = useState<Partial<Record<string, number>> | null>(null);
   const [hasNotifs, setHasNotifs] = useState(false);
@@ -55,7 +55,6 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
     //     setHasNotifs(res.count > 0);
     //   }
     // };
-
     // fetchNotifs();
   }, []);
 
@@ -75,10 +74,10 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
       case 'notifications':
         return 'notifications';
       case 'help':
-      case 'feedback':
+        // case 'feedback':
         return 'help';
-      case 'library':
-        return 'library';
+      // case 'library':
+      //   return 'library';
       default:
         return 'browse';
     }
@@ -159,7 +158,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
                 goToBrowse();
               }}
             />
-            <Button
+            {/* <Button
               minimal
               className={cn('flex place-content-center', {
                 'border border-gray-200 bg-bp-gray-1': selectedItem === 'library',
@@ -170,7 +169,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
                 e.stopPropagation();
                 goToLibrary(user.id);
               }}
-            />
+            /> */}
             <Button
               minimal
               className={cn('relative flex place-content-center border', {

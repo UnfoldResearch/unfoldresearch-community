@@ -21,7 +21,9 @@ module.exports = {
         'm1': 'max-content 1fr',
         '1m': '1fr max-content',
         'mmm': 'repeat(3, max-content)',
+        'm1m': 'max-content 1fr max-content',
         'mmmm': 'repeat(4, max-content)',
+        'mm1m': 'max-content max-content 1fr max-content',
         'mmmm1m': 'max-content max-content max-content max-content 1fr max-content',
       },
       fontSize: {

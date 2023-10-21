@@ -1,6 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { isDev } from 'unfold-utils';
-import { useNavigation } from './useNavigation';
 import { IconsBoard, Input, SectionToggle } from 'unfold-ui';
 import { ReactNode } from 'react';
 
@@ -26,7 +25,6 @@ const PageDataCtx = createContext<{ current: PageData | null; unsuppressPageData
 export const usePageData = () => useContext(PageDataCtx);
 
 export const PageDataProvider = ({ children }: { children?: ReactNode }): JSX.Element => {
-  const { goToBrowse } = useNavigation();
   const [pageData, setPageData] = useState<PageData | null>(null);
   const suppressedRef = useRef(true);
   const [text, setText] = useState(pageData?.url || '');
@@ -72,8 +70,6 @@ export const PageDataProvider = ({ children }: { children?: ReactNode }): JSX.El
   useEffect;
 
   useEffect(() => {
-    goToBrowse();
-
     if (isDev()) {
       setText(pageData?.url || '');
     }

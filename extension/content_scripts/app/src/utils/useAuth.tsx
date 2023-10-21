@@ -51,10 +51,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<Auth['user']>(null);
 
   useEffect(() => {
-    console.log(`user: ${!!user}`);
-  }, [user]);
-
-  useEffect(() => {
     const getUser = async () => {
       const accessToken = await extStorage.get('auth::access_token', '');
 

@@ -26,9 +26,8 @@ const SCREEN: Record<Navigation['current']['screen'], () => JSX.Element> = {
 
 export const Sidebar = (): JSX.Element => {
   const { current } = useNavigation();
-  const { user } = useAuth();
 
-  const Screen = user ? SCREEN[current.screen] : AuthScreen;
+  const Screen = SCREEN[current.screen];
 
   return (
     <div className="overflow-hidden border-l border-gray-200 bg-bp-gray-1 text-xs shadow-md" data-comp="sidebar">

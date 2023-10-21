@@ -81,12 +81,11 @@ export type Navigation = {
 const NavigationCtx = createContext<Navigation | null>(null);
 
 export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.Element => {
+  const { current: currentPage } = usePageData();
   const { user } = useAuth();
   const [nav, setNav] = useState<NavigationPage>({
     screen: 'auth',
   });
-
-  const { current: currentPage } = usePageData();
 
   const fetchCurrentUrlEntryAndGo = async () => {
     // Maybe we have the page data, but it's suppressed, meaning we still have
@@ -98,8 +97,6 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
     if (!currentPage || !user || currentPage.suppressed) {
       return;
     }
-
-    console.log('fetchngo');
 
     const res = await api.entry.getEntryByUrl({
       url: currentPage.url,
@@ -127,6 +124,14 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
       });
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      setNav({
+        screen: 'auth',
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     fetchCurrentUrlEntryAndGo();

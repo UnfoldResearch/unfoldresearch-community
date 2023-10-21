@@ -8,7 +8,7 @@ import { useNavigation } from '../../utils/useNavigation';
 import { ScreenTitle } from '../ScreenTitle';
 
 export const HelpScreen = (): JSX.Element => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { goToUser, goToFeedback } = useNavigation();
 
   useEffect(() => {
@@ -82,7 +82,8 @@ export const HelpScreen = (): JSX.Element => {
           <span
             className="cursor-pointer font-semibold"
             onClick={() => {
-              goToUser(user!.id);
+              logout();
+              // goToUser(user!.id);
             }}
           >
             {user?.displayName}

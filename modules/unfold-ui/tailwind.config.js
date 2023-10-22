@@ -2,11 +2,11 @@
 module.exports = {
   content: [
     // files from this project
-    './**/*.{tsx,ts}',
+    './**/*.{tsx}',
     // make sure to "see" the classnames from the UI package's files as well
-    '**/modules/**/src/**/*.{tsx,ts}',
-    'web/**/*.{tsx,ts}',
-    '../../web/**/*.{tsx,ts}',
+    '**/modules/**/src/**/*.{tsx}',
+    'web/**/*.{tsx}',
+    '../../web/**/*.{tsx}',
   ],
   theme: {
     extend: {
@@ -16,12 +16,14 @@ module.exports = {
         'mm1': 'max-content max-content 1fr',
         'm1m': 'max-content 1fr max-content',
         'mmm': 'repeat(3, max-content)',
+        '1m1': '1fr max-content 1fr',
       },
       gridTemplateColumns: {
         'm1': 'max-content 1fr',
         '1m': '1fr max-content',
         'mmm': 'repeat(3, max-content)',
         'm1m': 'max-content 1fr max-content',
+        '1m1': '1fr max-content 1fr',
         'mmmm': 'repeat(4, max-content)',
         'mm1m': 'max-content max-content 1fr max-content',
         'mmmm1m': 'max-content max-content max-content max-content 1fr max-content',

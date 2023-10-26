@@ -2,11 +2,11 @@
 module.exports = {
   content: [
     // files from this project
-    './**/*.{tsx}',
+    './**/*.{tsx,ts}',
     // make sure to "see" the classnames from the UI package's files as well
-    '**/modules/**/src/**/*.{tsx}',
-    'web/**/*.{tsx}',
-    '../../web/**/*.{tsx}',
+    '**/modules/**/src/**/*.{tsx,ts}',
+    'web/**/*.{tsx,ts}',
+    '../../web/**/*.{tsx,ts}',
   ],
   theme: {
     extend: {

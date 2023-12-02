@@ -7,40 +7,38 @@ import api from '../../utils/api';
 
 export const BrowseScreen = (): JSX.Element => {
   const {
-    current: { entry },
+    current: { entryId },
   } = useNavigation<'browse'>();
 
+  const [entry, setEntry] = useState<Entry | null>(null);
   const [entries, setEntries] = useState<Entry[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setEntries(null);
-      const data = await api.entry.getEntriesByEntry({
-        entryId: entry.id,
-      });
+      console.log(`refretching entry and entries...`);
+      const [entryRes, entriesRes] = await Promise.all([
+        api.entry.getEntryById({ entryId }),
+        api.entry.getEntriesByEntry({ entryId }),
+      ]);
 
-      if (data) {
-        setEntries(data.entries);
-        return;
+      if (entryRes && entriesRes) {
+        setEntry(entryRes.entry);
+        setEntries(entriesRes.entries);
       }
-
-      setEntries([]);
     };
 
     fetchData();
-  }, [entry]);
+  }, [entryId]);
 
   return (
     <div className="grid h-full grid-flow-row grid-rows-m1" data-comp="browse">
       <div className="overflow-hidden">
         <div className="h-full max-h-[440px] overflow-hidden border-b border-gray-200 bg-white">
-          <div className="h-full overflow-y-auto px-3">
-            <EntryContent entry={entry} />
-          </div>
+          <div className="h-full overflow-y-auto px-3">{entry && <EntryContent entry={entry} />}</div>
         </div>
       </div>
 
-      <EntriesList entries={entries} />
+      {entry && entries && <EntriesList entries={entries} entry={entry} />}
     </div>
   );
 };

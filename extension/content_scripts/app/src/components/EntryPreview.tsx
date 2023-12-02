@@ -1,8 +1,8 @@
 import { MouseEventHandler } from 'react';
 import { Entry } from 'unfold-core';
 import { EntryPostingMeta, EntryTitle, EntryVoter } from 'unfold-ui';
-import { FormatMeta, Format } from 'unfold-plugins';
 import { useNavigation } from '../utils/useNavigation';
+import { useAuth } from '../utils/useAuth';
 
 type EntryPreviewProps = {
   entry: Entry;
@@ -10,29 +10,27 @@ type EntryPreviewProps = {
 };
 
 export const EntryPreview = ({ entry, onClick }: EntryPreviewProps): JSX.Element => {
+  const user = useAuth().user;
   const { goToUser } = useNavigation();
 
   return (
     <div
-      className="cloud grid cursor-pointer grid-flow-col grid-cols-m1 items-center gap-2 p-3 text-xs text-gray-700 hover:bg-white"
+      className="cloud flex flex-col gap-1 cursor-pointer p-3 text-xs text-gray-700 hover:bg-white"
       onClick={onClick}
     >
-      <EntryVoter score={entry.score} vote={entry.vote} disabled />
-
-      <div>
-        <div className="mb-0.5 flex justify-between text-xxs text-gray-400">
-          {/* <FormatMeta format={entry.format as Format} /> */}
-          <EntryPostingMeta
-            entry={entry}
-            type="short"
-            as="div"
-            onClick={() => {
-              goToUser(entry.createdBy.id);
-            }}
-          />
-        </div>
-        <EntryTitle title={entry.title} clamp={2} />
+      <div className="mb-0.5 flex justify-between text-xxs text-gray-400">
+        {/* <FormatMeta format={entry.format as Format} /> */}
+        <EntryPostingMeta
+          entry={entry}
+          type="short"
+          as="div"
+          onClick={() => {
+            goToUser(entry.createdBy);
+          }}
+        />
       </div>
+      <EntryTitle title={entry.title} clamp={2} />
+      <EntryVoter allowedToVote={true} votes={entry.votes} currentUserDisplayName={user!.displayName} filterNils />
     </div>
   );
 };

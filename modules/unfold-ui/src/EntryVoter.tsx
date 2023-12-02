@@ -1,77 +1,80 @@
-import React from 'react';
-import { Vote } from 'unfold-core';
+import React, { FC, useEffect, useState } from 'react';
+import { Entry, Vote, VoteOptions } from 'unfold-core';
 import { formatAmount } from 'unfold-utils';
-import cn from 'classnames';
+import { ThumbsUpIcon, ThumbsDownIcon, HeartIcon, LightbulbIcon } from 'lucide-react';
 
-import { Icon, IconProps } from './Icon';
+import { Button } from './Button';
+
+const VOTE_ICONS = {
+  upvote: ThumbsUpIcon,
+  downvote: ThumbsDownIcon,
+  bulb: LightbulbIcon,
+  heart: HeartIcon,
+} as const satisfies Record<Vote, FC>;
 
 type EntryVoterProps = {
-  score: number;
-  vote: Vote | null;
-  disabled?: boolean;
-  onUpvote?: () => Promise<void>;
-  onDownvote?: () => Promise<void>;
+  currentUserDisplayName: string;
+  votes: Entry['votes'];
+  allowedToVote?: boolean;
+  filterNils?: boolean;
+  onRemoveVote?: () => Promise<Entry['votes']>;
+  onCastVote?: (vote: Vote) => Promise<Entry['votes']>;
 };
 
-export const EntryVoter = ({ score, vote, disabled, onDownvote, onUpvote }: EntryVoterProps): JSX.Element => {
-  const isUpvote = vote === 'upvote';
-  const isDownvote = vote === 'downvote';
+export const EntryVoter = ({
+  currentUserDisplayName,
+  allowedToVote,
+  filterNils,
+  onCastVote,
+  onRemoveVote,
+  votes: propsVotes,
+}: EntryVoterProps): JSX.Element => {
+  const [votes, setVotes] = useState<Entry['votes']>(propsVotes);
 
-  const props: Partial<IconProps> = {
-    size: 10,
-    strokeWidth: disabled ? undefined : 0.5,
-  };
+  useEffect(() => {
+    setVotes(propsVotes);
+  }, [propsVotes]);
+
+  let currentUserVote: Vote | null = null;
+  for (const vote of VoteOptions) {
+    if (votes[vote]?.find((details) => details.displayName === currentUserDisplayName)) {
+      currentUserVote = vote;
+      break;
+    }
+  }
 
   return (
-    <div className="voter grid w-[44px] grid-cols-m1 items-center gap-1">
-      <div className="flex flex-col gap-1">
-        <Icon
-          icon="thumbs-up"
-          {...props}
-          className={cn({
-            'text-sky-600': isUpvote,
-            'text-gray-200': isDownvote || (disabled && !isUpvote),
-            'text-gray-600': !disabled && !vote,
-            'cursor-pointer': !disabled,
-          })}
-          onClick={async () => {
-            if (disabled) {
-              return;
-            }
-
-            try {
-              onUpvote && (await onUpvote());
-            } catch {
-              // do nothing
-            }
-          }}
-        />
-        <Icon
-          icon="thumbs-up"
-          style={{
-            transform: 'rotate(180deg)',
-          }}
-          className={cn({
-            'text-red-600': isDownvote,
-            'text-gray-200': isUpvote || (disabled && !isDownvote),
-            'text-gray-600': !disabled && !vote,
-            'cursor-pointer': !disabled,
-          })}
-          {...props}
-          onClick={async () => {
-            if (disabled) {
-              return;
-            }
-
-            try {
-              onDownvote && (await onDownvote());
-            } catch {
-              // do nothing
-            }
-          }}
-        />
+    <div>
+      <div className="flex gap-1">
+        {VoteOptions.filter((v) => !filterNils || votes[v]).map((v) => {
+          const Icon = VOTE_ICONS[v];
+          return (
+            <Button
+              key={v}
+              disabled={!allowedToVote}
+              {...(currentUserVote !== v
+                ? {
+                    minimal: true,
+                  }
+                : {
+                    outline: true,
+                  })}
+              onClick={async () => {
+                if (currentUserVote === v && onRemoveVote) {
+                  const updatedVotes = await onRemoveVote();
+                  setVotes(updatedVotes);
+                }
+                if (currentUserVote !== v && onCastVote) {
+                  const updatedVotes = await onCastVote(v);
+                  setVotes(updatedVotes);
+                }
+              }}
+            >
+              <Icon strokeWidth={1} absoluteStrokeWidth size={12} /> {formatAmount(votes[v]?.length ?? 0)}
+            </Button>
+          );
+        })}
       </div>
-      <span className="text-center text-xs font-semibold text-gray-500">{formatAmount(score)}</span>
     </div>
   );
 };

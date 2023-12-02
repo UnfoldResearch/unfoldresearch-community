@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { Collection, Entry, EntryFull, User } from 'unfold-core';
+import { Entry, User } from 'unfold-core';
 import analytics from './analytics';
 import api from './api';
 import { useAuth } from './useAuth';
@@ -12,8 +12,7 @@ type NavigationPage =
     }
   | {
       screen: 'browse';
-      entry: EntryFull;
-      setVote: (voteDetails: Pick<EntryFull, 'vote' | 'score'>) => void;
+      entryId: Entry['id'];
     }
   // | {
   //     screen: 'report';
@@ -66,7 +65,7 @@ type NavigationPage =
 export type Navigation = {
   current: NavigationPage;
   goToAuth: () => void;
-  goToBrowse: (targetEntry?: Pick<Entry, 'id' | 'title'>) => Promise<void>;
+  goToBrowse: (entryId?: Entry['id']) => Promise<void>;
   goToReport: (entry: Entry) => void;
   goToSubmit: (parent: Entry) => void;
   goToHelp: () => void;
@@ -105,22 +104,11 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
     });
 
     if (res && res.entry) {
-      const setVote: Extract<NavigationPage, { screen: 'browse' }>['setVote'] = ({ score, vote }) => {
-        setNav({
-          screen: 'browse',
-          entry: {
-            ...res.entry,
-            score,
-            vote,
-          },
-          setVote,
-        });
-      };
-      setNav({ screen: 'browse', entry: res.entry, setVote });
+      setNav({ screen: 'browse', entryId: res.entry.id });
       analytics.events.track('navigation.entry', {
         entryId: res.entry.id,
         title: res.entry.title,
-        authorId: res.entry.createdBy.id,
+        authorId: res.entry.createdBy,
       });
     }
   };
@@ -142,37 +130,13 @@ export const NavigationProvider = ({ children }: { children?: ReactNode }): JSX.
       value={{
         current: nav,
         goToAuth: () => setNav({ screen: 'auth' }),
-        goToBrowse: async (targetEntry) => {
-          if (!targetEntry) {
+        goToBrowse: async (entryId) => {
+          if (!entryId) {
             fetchCurrentUrlEntryAndGo();
             return;
           }
 
-          const entry = (
-            await api.entry.getEntryById({
-              entryId: targetEntry.id,
-            })
-          )?.entry;
-
-          if (entry) {
-            const setVote: Extract<NavigationPage, { screen: 'browse' }>['setVote'] = ({ score, vote }) => {
-              setNav({
-                screen: 'browse',
-                entry: {
-                  ...entry,
-                  score,
-                  vote,
-                },
-                setVote,
-              });
-            };
-            setNav({ screen: 'browse', entry: entry, setVote });
-            analytics.events.track('navigation.entry', {
-              entryId: entry.id,
-              title: entry.title,
-              authorId: entry.createdBy.id,
-            });
-          }
+          setNav({ screen: 'browse', entryId });
         },
         goToReport: (entry: Entry) => {
           console.log('goToReport Not implemented.');

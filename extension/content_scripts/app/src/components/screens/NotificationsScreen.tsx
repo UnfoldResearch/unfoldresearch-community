@@ -1,30 +1,29 @@
 import { useState, useEffect } from 'react';
-import { Notification } from 'unfold-core';
 import { formatTimeDiff } from 'unfold-utils';
 import { Button } from 'unfold-ui';
 import analytics from '../../utils/analytics';
 import api from '../../utils/api';
-import { NotificationItem } from '../NotificationItem';
+// import { NotificationItem } from '../NotificationItem';
 import { ScreenTitle } from '../ScreenTitle';
 
 export const NotificationsScreen = (): JSX.Element => {
   const [notifications, setNotifications] = useState<Notification[] | null>(null);
   // const [pagesLoaded, setPagesLoaded] = useState(0);
 
-  useEffect(() => {
-    analytics.events.track('navigation.notifications');
+  // useEffect(() => {
+  //   analytics.events.track('navigation.notifications');
 
-    const fetchNotifs = async () => {
-      const res = await api.notification.get({});
+  //   const fetchNotifs = async () => {
+  //     const res = await api.notification.get({});
 
-      if (res) {
-        setNotifications(res.notifications);
-      }
-    };
-    if (!notifications) {
-      fetchNotifs();
-    }
-  }, []);
+  //     if (res) {
+  //       setNotifications(res.notifications);
+  //     }
+  //   };
+  //   if (!notifications) {
+  //     fetchNotifs();
+  //   }
+  // }, []);
 
   return (
     <div className="text-gray-700">
@@ -61,7 +60,7 @@ export const NotificationsScreen = (): JSX.Element => {
             </div>
           </div>
         )}
-        {notifications &&
+        {/* {notifications &&
           notifications.length > 0 &&
           notifications.map((n) => (
             <div
@@ -77,10 +76,9 @@ export const NotificationsScreen = (): JSX.Element => {
                     format: 'm',
                   })}
                 </div>
-                <div>{/* <Button minimal icon="checkbox-circle" /> */}</div>
               </div>
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   );

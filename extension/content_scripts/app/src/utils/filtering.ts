@@ -1,4 +1,13 @@
-import { Entry } from 'unfold-core';
+import { Entry, VOTE_WEIGHTS, Vote } from 'unfold-core';
+
+const countScore = (votes: Entry['votes']) => {
+  const allVotes = Object.entries(votes) as unknown as [Vote, number][];
+  let res = 0;
+  for (const [vote, count] of allVotes) {
+    res = res + VOTE_WEIGHTS[vote] * count;
+  }
+  return res;
+};
 
 type FilterOrderBy = 'date' | 'score' | 'velocity';
 type FilterOrder = 'asc' | 'desc';
@@ -34,11 +43,13 @@ export const DEFAULT_FILTER_OPTIONS: FilterOptions = {
 };
 
 export const filterEntries = (entries: Entry[], filterQuery: string, filter: FilterOptions): Entry[] => {
-  const SORT_FIELD: Record<FilterOrderBy, 'createdAt' | 'score' | ((entry: Entry) => number)> = {
-    date: 'createdAt',
-    score: 'score',
-    velocity: (e) => e.score / (Date.now() - e.createdAt),
-  } as const;
+  // const SORT_FIELD: Record<FilterOrderBy, 'createdAt' | 'score' | ((entry: Entry) => number)> = {
+  //   date: 'createdAt',
+  //   score: 'score',
+  //   velocity: (e) => e.score / (Date.now() - e.createdAt),
+  // } as const;
+
+  const scores = entries.map((e) => countScore(e.votes));
 
   // parse and tidy query
   let query = filterQuery.toLowerCase();
@@ -77,18 +88,21 @@ export const filterEntries = (entries: Entry[], filterQuery: string, filter: Fil
   // sort
   const sortFactor = filter.order === 'asc' ? -1 : 1;
 
-  return filteredEntries.sort((a, b) => {
-    const field = SORT_FIELD[filter.orderBy]!;
+  return filteredEntries;
 
-    const _a = typeof field === 'function' ? field(a) : a[field];
-    const _b = typeof field === 'function' ? field(b) : b[field];
+  // return filteredEntries.sort((a, b) => {
+  //   const field = SORT_FIELD[filter.orderBy]!;
 
-    if (_a < _b) {
-      return 1 * sortFactor;
-    }
-    if (_a > _b) {
-      return -1 * sortFactor;
-    }
-    return 0;
-  });
+  //   const _a = typeof field === 'function' ? field(a) : a[field];
+  //   const _b = typeof field === 'function' ? field(b) : b[field];
+
+  //   if (_a < _b) {
+  //     return 1 * sortFactor;
+  //   }
+  //   if (_a > _b) {
+  //     return -1 * sortFactor;
+  //   }
+  //   return 0;
+  // });
+  // return entries;
 };

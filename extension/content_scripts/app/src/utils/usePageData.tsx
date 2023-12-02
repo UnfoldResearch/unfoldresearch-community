@@ -34,7 +34,7 @@ export const PageDataProvider = ({ children }: { children?: ReactNode }): JSX.El
       setPageData({
         url: 'https://unfoldresearch.com',
         title: 'https://unfoldresearch.com',
-        description: 'description',
+        description: `https://unfoldresearch.com page description`,
         suppressed: suppressedRef.current,
       });
       return;
@@ -139,7 +139,7 @@ export const PageDataProvider = ({ children }: { children?: ReactNode }): JSX.El
                 setPageData({
                   url,
                   title: url,
-                  description: url,
+                  description: `${url} page description`,
                   suppressed: suppressedRef.current,
                 });
                 setText(url);

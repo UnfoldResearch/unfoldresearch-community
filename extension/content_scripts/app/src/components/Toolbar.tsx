@@ -152,7 +152,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(({ toggleExpande
               title="Browse"
               onClick={(e) => {
                 e.stopPropagation();
-                if (current.screen === 'browse' && current.entry.url === currentPage?.url) {
+                if (current.screen === 'browse' /* && current.entry.url === currentPage?.url */) {
                   return;
                 }
                 goToBrowse();

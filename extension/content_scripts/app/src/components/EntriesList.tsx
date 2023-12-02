@@ -8,8 +8,8 @@ import { useNavigation } from '../utils/useNavigation';
 
 const CIRCLE_ICONS: IconName[] = ['folder-open', 'box-2', 'file-text', 'note-text', 'receipt', 'new-release'];
 
-export const EntriesList = ({ entries }: { entries: Entry[] | null }): JSX.Element => {
-  const { current, goToSubmit, goToBrowse } = useNavigation<'browse'>();
+export const EntriesList = ({ entries, entry }: { entries: Entry[] | null; entry: Entry }): JSX.Element => {
+  const { goToSubmit, goToBrowse } = useNavigation<'browse'>();
   const [query, setQuery] = useState('');
   const [filter /* , setFilter */] = useState(DEFAULT_FILTER_OPTIONS);
 
@@ -35,7 +35,7 @@ export const EntriesList = ({ entries }: { entries: Entry[] | null }): JSX.Eleme
         <Button
           icon="plus-rec"
           onClick={() => {
-            goToSubmit(current.entry);
+            goToSubmit(entry);
           }}
         >
           Add new
@@ -50,7 +50,7 @@ export const EntriesList = ({ entries }: { entries: Entry[] | null }): JSX.Eleme
                 key={entry.id}
                 entry={entry}
                 onClick={() => {
-                  goToBrowse(entry);
+                  goToBrowse(entry.id);
                 }}
               />
             ))

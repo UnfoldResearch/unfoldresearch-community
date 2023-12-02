@@ -19,6 +19,7 @@ type EntryLinkedToProps = {
 );
 
 export const EntryLinkedTo = ({ className, entry: { parent }, ...rest }: EntryLinkedToProps): JSX.Element | null => {
+  console.log(parent);
   if (!parent || !parent.id) {
     return null;
   }

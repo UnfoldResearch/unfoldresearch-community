@@ -3,16 +3,15 @@ import api from './api';
 import jwt_decode from 'jwt-decode';
 import { extStorage } from 'unfold-utils';
 import analytics from './analytics';
+import { JWTPayload } from 'unfold-api';
 
 type Auth = {
-  user: {
-    displayName: string;
-    score: number;
-    id: string;
-    createdAt: Date;
-    showOnboarding: boolean;
-    accessToken: string;
-  } | null;
+  user:
+    | (Pick<JWTPayload, 'id' | 'createdAt' | 'displayName'> & {
+        showOnboarding: boolean;
+        accessToken: string;
+      })
+    | null;
   register: (data: { displayName: string; email: string; password: string }) => Promise<
     | {
         isVerified: boolean;
@@ -23,18 +22,6 @@ type Auth = {
   login: (data: { emailOrDisplayName: string; password: string }, showOnboarding?: boolean) => Promise<void>;
   logout: () => void;
   setShowOnboarding: (show: boolean) => void;
-};
-
-type JWTPayload = {
-  id: string;
-  displayName: string;
-  score: number;
-  email: string;
-  isEmailVerified: boolean;
-  createdAt: string;
-  iat: number;
-  // fullName: string;
-  // exp: number;
 };
 
 const AuthContext = createContext<Auth | null>(null);
@@ -63,7 +50,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser({
         displayName: jwtPayload.displayName,
         id: jwtPayload.id,
-        score: jwtPayload.score,
         createdAt: new Date(jwtPayload.createdAt),
         showOnboarding: false,
         accessToken: accessToken,
@@ -118,7 +104,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser({
       displayName: jwtPayload.displayName,
       id: jwtPayload.id,
-      score: jwtPayload.score,
       createdAt: new Date(jwtPayload.createdAt),
       showOnboarding,
       accessToken: loginRes.access_token,

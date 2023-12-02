@@ -1,12 +1,10 @@
 import React from 'react';
 import { ComponentProps } from 'react';
 import { User } from 'unfold-core';
-import { formatAmount } from 'unfold-utils';
 
 type Props = {
   user: {
     displayName: User['displayName'];
-    score?: User['score'];
   };
   disabled?: boolean;
 } & (
@@ -39,7 +37,7 @@ export const EntryAuthor = ({ user, disabled, ...props }: Props): JSX.Element =>
       <Comp {...attrs}>
         <span className="font-semibold">{user.displayName}</span>
       </Comp>
-      {user.score !== undefined && <span>({formatAmount(user.score)})</span>}
+      {/* {user.score !== undefined && <span>({formatAmount(user.score)})</span>} */}
     </span>
   );
 };

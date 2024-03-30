@@ -5,11 +5,6 @@
   "description": "A tool for linking academic research together",
   "author": "Dragan Okanovic <dragan@unfoldresearch.com>",
   "homepage_url": "https://unfoldresearch.com",
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{435bfe8a-0993-4825-a141-c30f924a92c8}"
-    }
-  },
   "icons": {
     "16": "logo_sm.png",
     "32": "logo_sm.png",

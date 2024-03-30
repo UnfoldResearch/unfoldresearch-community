@@ -1,6 +1,6 @@
 import { useContext, createContext, useState, ReactNode, useEffect } from 'react';
 import api from './api';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { extStorage } from 'unfold-utils';
 import analytics from './analytics';
 import { JWTPayload } from 'unfold-api';
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      const jwtPayload: JWTPayload = jwt_decode(accessToken);
+      const jwtPayload = jwtDecode<JWTPayload>(accessToken);
       setUser({
         displayName: jwtPayload.displayName,
         id: jwtPayload.id,
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     await extStorage.set('auth::access_token', loginRes.access_token);
 
-    const jwtPayload: JWTPayload = jwt_decode(loginRes.access_token);
+    const jwtPayload = jwtDecode<JWTPayload>(loginRes.access_token);
 
     setUser({
       displayName: jwtPayload.displayName,

@@ -45,7 +45,7 @@ export const EntryVoter = ({
 
   return (
     <div>
-      <div className="flex gap-1">
+      <div className="flex gap-1 items-center">
         {VoteOptions.filter((v) => !filterNils || votes[v]).map((v) => {
           const Icon = VOTE_ICONS[v];
           return (

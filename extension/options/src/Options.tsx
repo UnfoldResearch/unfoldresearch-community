@@ -1,4 +1,4 @@
-import { useOptions } from 'unfold-core';
+import { useOptions } from 'unfold-utils';
 
 const Options = (): JSX.Element => {
   const { options, setOption } = useOptions();

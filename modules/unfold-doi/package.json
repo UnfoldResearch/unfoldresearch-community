@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
+  "module": "src/index.ts",
   "exports": {
     "node": "./build/index.js",
     "require": "./build",
@@ -12,7 +13,6 @@
     "build"
   ],
   "devDependencies": {
-    "@types/node": "^18.7.1",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "eslint": "^8.32.0",
@@ -22,9 +22,7 @@
     "typescript": "*"
   },
   "scripts": {
-    "prepare": "tsc -b",
-    "build": "tsc -b",
-    "rebuild": "bun run build",
+    "typecheck": "tsc",
     "build:single": "tsc src/index.ts --outFile unfold-doi.js --module amd --moduleResolution node"
   }
 }

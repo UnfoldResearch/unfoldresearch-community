@@ -2,7 +2,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {},
   plugins: ['@typescript-eslint/eslint-plugin'],
-  ignorePatterns: ['node_modules/*', '!.prettierrc.js'],
+  ignorePatterns: ['node_modules/**', '!.prettierrc.js'],
   extends: ['plugin:@typescript-eslint/recommended'],
   env: {
     browser: true,

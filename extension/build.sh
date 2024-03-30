@@ -53,7 +53,7 @@ printf "${COL_CYAN}# Building content scripts...${COL_NONE}\n"
 cd content_scripts
 cp content.html ../$OUTPUT_DIR/content.html
 cp content-root.css ../$OUTPUT_DIR/content-root.css
-npx tsc content-root.ts inj_script.ts --outDir ../$OUTPUT_DIR
+tsc content-root.ts inj_script.ts --outDir ../$OUTPUT_DIR
 cd app
 bun run build
 cp build/content-react.js ../../$OUTPUT_DIR/content-react.js

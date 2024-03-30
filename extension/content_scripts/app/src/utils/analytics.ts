@@ -1,16 +1,16 @@
 import mixpanel, { Callback } from 'mixpanel-browser';
 import { AnalyticsEvent } from 'unfold-analytics';
-import { MIXPANEL_TOKEN } from 'unfold-core';
-import { isDev } from 'unfold-utils';
+// import { MIXPANEL_TOKEN } from 'unfold-core';
+// import { isDev } from 'unfold-utils';
 
 type KeysMatching<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T];
 
 // -- analytics ------------
 
 // mixpanel.init(process.env.REACT_APP_MIXPANEL_TOKEN as string);
-if (!isDev()) {
-  mixpanel.init(MIXPANEL_TOKEN.prod);
-}
+// if (!isDev()) {
+//   mixpanel.init(MIXPANEL_TOKEN.prod);
+// }
 
 // -----------------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ const analyticsImpl = {
   },
 } as const;
 
-const analytics = isDev()
+const analytics = true //isDev()
   ? ({
       events: {
         time: noop,

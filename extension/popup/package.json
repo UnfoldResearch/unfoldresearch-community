@@ -1,5 +1,5 @@
 {
-  "name": "extension-popup",
+  "name": "ext-popup",
   "version": "0.1.0",
   "private": true,
   "scripts": {

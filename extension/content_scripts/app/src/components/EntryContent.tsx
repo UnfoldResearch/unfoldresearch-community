@@ -9,7 +9,7 @@ import api from '../utils/api';
 import analytics from '../utils/analytics';
 import { SaveEntryButton } from './SaveEntryButton';
 import { FollowEntryButton } from './FollowEntryButton';
-import { Editor, EditorContextProvider } from 'unfold-plugins';
+import { Editor } from 'unfold-plugins';
 
 type EntryContentProps = {
   entry: Entry;
@@ -150,13 +150,13 @@ export const EntryContent = ({ entry }: EntryContentProps): JSX.Element => {
 
       <EntryTitle title={entry.title} className="mb-3 font-semibold" />
 
-      <EditorContextProvider>
-        <div className="text-xs text-gray-700 bg-white">
-          <div className="relative">
-            <Editor content={entry.content} />
-          </div>
+      {/* <EditorContextProvider> */}
+      <div className="text-xs text-gray-700 bg-white">
+        <div className="relative">
+          <Editor initialContent={entry.content} readonly />
         </div>
-      </EditorContextProvider>
+      </div>
+      {/* </EditorContextProvider> */}
 
       <div className="flex flex-col gap-1 pt-3">
         <EntryPostingMeta

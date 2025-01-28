@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { License } from 'unfold-core';
 import { Button, Input, GFML } from 'unfold-ui';
-import { Editor, EditorContextProvider, SerializedEditorState } from 'unfold-plugins';
+import { Editor, SerializedEditorState, EMPTY_EDITOR_STATE } from 'unfold-plugins';
 
 import { useNavigation } from '../../utils/useNavigation';
 import api from '../../utils/api';
@@ -13,7 +13,7 @@ export const SubmitScreen = (): JSX.Element => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle');
 
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState<SerializedEditorState>(null);
+  const [content, setContent] = useState<SerializedEditorState>(EMPTY_EDITOR_STATE);
   // const [files, setFiles] = useState<File[]>([]);
   // const [tags, setTags] = useState<Tag[]>([]);
 
@@ -83,13 +83,12 @@ export const SubmitScreen = (): JSX.Element => {
 
         <Input className="w-full mb-2" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
 
-        <EditorContextProvider>
-          <div className="rounded border border-gray-300 py-1 px-2 text-xs text-gray-700 bg-white min-h-[150px]">
-            <div className="relative">
-              <Editor onChange={(content) => setContent(content)} />
-            </div>
+        <div className="rounded border border-gray-300 py-1 px-2 text-xs text-gray-700 bg-white min-h-[150px]">
+          <div className="relative">
+            {/* <Toolbar /> */}
+            <Editor onChange={(content) => setContent(content)} />
           </div>
-        </EditorContextProvider>
+        </div>
 
         {/* files, semantics, tags, license */}
 
